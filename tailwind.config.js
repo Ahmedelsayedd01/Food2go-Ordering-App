@@ -23,11 +23,11 @@ export default {
         AddButton: "#ffffff",
       },
       screens: {
-        sm: "320px",
-        md: "640px",
-        lg: "740px",
-        xl: "1280px",
-        // "2xl": "1536px",
+        sm: "320px", // Small devices (e.g., phones)
+        md: "640px", // Medium devices (e.g., tablets)
+        lg: "740px", // Large devices (small laptops)
+        xl: "1280px", // Extra large devices (desktops)
+        "2xl": "1536px", // Double extra large devices (larger desktops)
       },
     },
   },
