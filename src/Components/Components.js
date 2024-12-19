@@ -1,3 +1,9 @@
+/* Navbar */
+export { default as Navbar } from "./Navbar/Navbar";
+/* Links */
+export { default as Links } from "./Links/Links";
+/* Footer */
+export { default as Footer } from "./Footer/Footer";
 /* Buttons */
 export { default as StaticButton } from "./Buttons/StaticButton";
 export { default as SubmitButton } from "./Buttons/SubmitButton";
