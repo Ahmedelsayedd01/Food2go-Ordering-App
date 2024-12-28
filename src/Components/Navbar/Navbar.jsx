@@ -7,7 +7,7 @@ import { MdRestaurantMenu } from 'react-icons/md'
 const Navbar = () => {
        const [toggleOpen, setToggleOpen] = useState(false);
        return (
-              <div className='relative w-full flex align-center justify-between  py-3 sm:px-5 xl:px-10 shadow-md'>
+              <div className='relative w-full flex align-center justify-between  py-3 sm:px-5 xl:px-10 bg-white shadow-md'>
                      <Link to={''} className="sm:w-6/12 xl:w-3/12 flex items-center justify-start gap-x-2 z-10">
                             <RedLogo width={45} />
                             <span className='text-3xl text-mainColor font-TextFontRegular'>Food2go</span>
@@ -33,7 +33,7 @@ const Navbar = () => {
                      </div>
 
                      <div
-                            className={`w-full absolute ${toggleOpen ? 'top-16' : '-top-72'} transition-all duration-300 left-0 bg-white shadow-md sm:flex xl:hidden flex-col items-center justify-center px-4 pb-3 rounded-br-3xl rounded-bl-3xl`}
+                            className={`w-full absolute ${toggleOpen ? 'top-16' : '-top-72'} transition-all duration-300 left-0 bg-white shadow-md sm:flex xl:hidden flex-col items-center justify-center px-4 pb-3 rounded-br-3xl rounded-bl-3xl z-20`}
                      >
                             <div className="w-full flex flex-col">
                                    <NavLink to={''}

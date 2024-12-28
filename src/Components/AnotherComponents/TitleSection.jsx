@@ -1,9 +1,9 @@
 
-const TitleSection = ({ text }) => {
+const TitleSection = ({ text, size = '2xl' }) => {
        return (
               <>
-                     <div className="w-full py-2">
-                            <span className="text-2xl font-TextFontMedium text-mainColor">{text}</span>
+                     <div className="w-full">
+                            <span className={`sm:text-2xl xl:text-${size} font-TextFontMedium text-mainColor`}>{text}</span>
                      </div>
               </>
        )
