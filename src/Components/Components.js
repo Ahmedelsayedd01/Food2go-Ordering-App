@@ -8,6 +8,7 @@ export { default as Footer } from "./Footer/Footer";
 export { default as StaticButton } from "./Buttons/StaticButton";
 export { default as SubmitButton } from "./Buttons/SubmitButton";
 export { default as AddButton } from "./Buttons/AddButton";
+export { default as LinkButton } from "./Buttons/LinkButton";
 /* Inputs */
 export { default as TextInput } from "./Inputs/TextInput";
 export { default as NumberInput } from "./Inputs/NumberInput";
@@ -24,5 +25,6 @@ export { default as StaticSpinner } from "./Spinners/StaticSpinner";
 export { default as SearchBar } from "./AnotherComponents/SearchBar";
 export { default as TitlePage } from "./AnotherComponents/TitlePage";
 export { default as TitleSection } from "./AnotherComponents/TitleSection";
+export { default as SupTitle } from "./AnotherComponents/SupTitle";
 export { default as Switch } from "./AnotherComponents/Switch";
 export { default as DropDown } from "./AnotherComponents/DropDown";
