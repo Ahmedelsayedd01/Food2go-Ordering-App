@@ -5,8 +5,10 @@ import { Outlet } from 'react-router-dom';
 const App = () => {
 
   return (
-    <div className='w-full bg-white flex flex-col items-center justify-between'>
-      <Navbar />
+    <div className='relative w-full bg-white flex flex-col items-center justify-between'>
+      <div className="sticky top-0 w-full z-30">
+        <Navbar />
+      </div>
       {/* Main Content Area */}
       <div className="w-full">
         <Outlet />
