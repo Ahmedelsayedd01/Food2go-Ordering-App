@@ -3,17 +3,22 @@ import RedLogo from '../../Assets/Images/RedLogo'
 import { Links } from '../Components'
 import { Link, NavLink } from 'react-router-dom'
 import { MdRestaurantMenu } from 'react-icons/md'
+import CartIcon from '../../assets/Icons/CartIcon'
 
 const Navbar = () => {
        const [toggleOpen, setToggleOpen] = useState(false);
        return (
-              <div className='relative w-full flex align-center justify-between  py-3 sm:px-5 xl:px-10 bg-white shadow-md'>
+              <nav className='relative w-full flex align-center justify-between  py-3 sm:px-5 xl:px-10 bg-white shadow-md'>
                      <Link to={''} className="sm:w-6/12 xl:w-3/12 flex items-center justify-start gap-x-2 z-10">
                             <RedLogo width={45} />
                             <span className='text-3xl text-mainColor font-TextFontRegular'>Food2go</span>
                      </Link>
                      <div className="sm:hidden xl:flex w-5/12  items-center"><Links /></div>
                      <div className="sm:hidden xl:flex w-3/12  items-center justify-end gap-x-4">
+                            <Link to={'/cart'}
+                            >
+                                   <CartIcon />
+                            </Link>
                             <Link to={'/login'}
                                    className='text-xl text-mainColor border-2 border-mainColor font-TextFontRegular px-5 py-1 rounded-full '
                             >
@@ -73,7 +78,7 @@ const Navbar = () => {
 
                      </div>
 
-              </div>
+              </nav>
        )
 }
 

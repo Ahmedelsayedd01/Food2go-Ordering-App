@@ -10,7 +10,7 @@ const HomePage = () => {
               <>
                      <div className="w-full">
                             <HeaderSection />
-                            <div className="w-full flex flex-col items-center justify-center gap-y-5 px-12">
+                            <div className="w-full flex flex-col items-center justify-center gap-y-5">
                                    <PremiumSection />
                                    <BannerSection />
                                    <BestDealsSection />

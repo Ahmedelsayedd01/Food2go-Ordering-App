@@ -28,3 +28,5 @@ export { default as TitleSection } from "./AnotherComponents/TitleSection";
 export { default as SupTitle } from "./AnotherComponents/SupTitle";
 export { default as Switch } from "./AnotherComponents/Switch";
 export { default as DropDown } from "./AnotherComponents/DropDown";
+/* Cart Item */
+export { default as CardItem } from "./AnotherComponents/CardItem";

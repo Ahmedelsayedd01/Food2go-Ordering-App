@@ -2,7 +2,9 @@ import React from 'react'
 
 const ReviewSection = () => {
        return (
-              <div>ReviewSection</div>
+              <>
+                     <div className='px-12'>ReviewSection</div>
+              </>
        )
 }
 
