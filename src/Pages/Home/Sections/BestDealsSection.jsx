@@ -24,7 +24,7 @@ const BestDealsSection = () => {
 
                             </div>
                             <LinkButton
-                                   to={'/menu'}
+                                   to={'/deals'}
                                    text={'View All Discounts'}
                             />
                      </div>

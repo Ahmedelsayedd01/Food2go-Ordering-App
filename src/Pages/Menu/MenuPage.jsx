@@ -13,7 +13,6 @@ const MenuPage = () => {
           text={'Categories'}
         />
         <CategoriesNavSection />
-        {/* <span className='w-full h-1 bg-mainColor rounded-full'></span> */}
         <CategoriesOfferSection />
         <ItemsMenuSection />
       </div>

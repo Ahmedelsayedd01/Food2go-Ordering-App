@@ -13,7 +13,7 @@ const HeaderSection = () => {
                      </p>
                      {/* <div className=""> */}
                             <LinkButton
-                                   to={'/menu'}
+                                   to={'/favorites'}
                                    text={'Order Your Favorite Meal'}
                             />
                      {/* </div> */}
