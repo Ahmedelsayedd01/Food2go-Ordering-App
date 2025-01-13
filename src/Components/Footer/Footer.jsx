@@ -6,7 +6,7 @@ import WhiteLogo from '../../assets/Images/WhiteLogo';
 
 const Footer = () => {
   return (
-    <div className="footer bg-mainColor w-full text-white p-7 mt-10">
+    <div className="footer bg-mainColor w-full text-white p-7 mt-2">
       <div className="container mx-auto px-5">
         
         {/* Logo Section */}
