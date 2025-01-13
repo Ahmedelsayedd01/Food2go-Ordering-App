@@ -19,7 +19,7 @@ export default {
       backgroundColor: {
         mainBgColor: "#E5E5E5",
         secoundBgColor: "#F5F5F5",
-        thirdBgColor: "#9D9D9D",
+        thirdBgColor: "#F4F4F4",
         AddButton: "#ffffff",
       },
       screens: {
