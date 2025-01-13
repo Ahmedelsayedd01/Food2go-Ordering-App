@@ -1,35 +1,37 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { createContext, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { removeUser, setUser } from "../Store/CreateSlices";
 
 // Create a context
 const AuthContext = createContext();
 
 export const ContextProvider = ({ children }) => {
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.data);
 
+  const [user, setUserState] = useState(() => userData || null);
 
-  const [user, setUser] = useState(() => {
-    const userData = localStorage.getItem('user');
-    return userData ? JSON.parse(userData) : null;
-  });
-
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     localStorage.setItem("user", JSON.stringify(user));
+  //   } else {
+  //     localStorage.removeItem("user");
+  //   }
+  // }, [user]);
 
   const login = (userData) => {
-    setUser(userData);
-    toast.success(`Welcome ${userData.name}`);
+    setUserState(userData); // Update local state
+    dispatch(setUser(userData)); // Dispatch to Redux
+    toast.success(`Welcome ${userData.f_name} ${userData.l_name}`);
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+    setUserState(null);
+    dispatch(removeUser()); // Remove from Redux
+    localStorage.removeItem("user");
+    toast.success("Logged out successfully");
   };
 
   return (
@@ -51,8 +53,8 @@ export const ContextProvider = ({ children }) => {
 // Custom hook to use auth context
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within a ContextProvider');
+  if (!context) {
+    throw new Error("useAuth must be used within a ContextProvider");
   }
   return context;
 };
