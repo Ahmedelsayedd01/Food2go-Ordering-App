@@ -18,6 +18,7 @@ export { default as DateInput } from "./Inputs/DateInput";
 export { default as TimeInput } from "./Inputs/TimeInput";
 export { default as UploadInput } from "./Inputs/UploadInput";
 /* Spinners */
+export { default as LoaderLogin } from "./Spinners/LoaderLogin";
 export { default as CustomSpinner } from "./Spinners/CustomSpinner";
 export { default as StaticSpinner } from "./Spinners/StaticSpinner";
 
@@ -28,5 +29,7 @@ export { default as TitleSection } from "./AnotherComponents/TitleSection";
 export { default as SupTitle } from "./AnotherComponents/SupTitle";
 export { default as Switch } from "./AnotherComponents/Switch";
 export { default as DropDown } from "./AnotherComponents/DropDown";
+export { default as HeaderNavigate } from "./AnotherComponents/HeaderNavigate";
+export { default as Checkbox } from "./AnotherComponents/Checkbox";
 /* Cart Item */
 export { default as CardItem } from "./AnotherComponents/CardItem";
