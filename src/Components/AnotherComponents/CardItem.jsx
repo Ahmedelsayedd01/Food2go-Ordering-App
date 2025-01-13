@@ -6,10 +6,10 @@ import { LinkButton } from '../Components'
 const CardItem = () => {
        return (
               <div
-                     className="flex flex-col min-h-[330px] max-h-[425] items-start justify-between gap-y-2 bg-[#F4F4F4] rounded-2xl p-3 shadow-md sm:w-full md:w-[48%] lg:w-[48%] xl:w-[23%]"
+                     className="flex flex-col min-h-[330px] max-h-[425] items-start justify-between gap-y-2 bg-thirdBgColor rounded-2xl p-3 shadow-md sm:w-full md:w-[48%] lg:w-[48%] xl:w-[23%]"
               >
                      {/* Image */}
-                     <div className="relative min-h-58 max-h-60 w-full">
+                     <div className="relative min-h-58 max-h-60 w-full overflow-hidden">
                             <img
                                    src="/src/assets/Images/ItemImage.png"
                                    className="rounded-xl w-full h-full object-center object-cover"
@@ -19,6 +19,7 @@ const CardItem = () => {
                             <button className="absolute top-4 right-5 shadow-md">
                                    <FaHeart className="text-mainColor text-2xl" />
                             </button>
+                            <span className='absolute top-5 -left-28 -rotate-45 text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>20%</span>
                      </div>
 
                      {/* Item Name */}
