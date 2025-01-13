@@ -9,8 +9,15 @@ import {
   CartPage,
   CheckOutPage,
   NotFoundPage,
+  ForgotPasswordPage,
+  OtpVerificationPage,
+  ProfilePage,
+  FavoritesPage,
+  ProductDetails,
+  DealsPage,
 } from "./Pages/page";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
+import { AuthLayout } from "./Layouts/Layouts";
 
 export const router = createBrowserRouter(
   [
@@ -18,6 +25,40 @@ export const router = createBrowserRouter(
       path: '',
       element: <App />,
       children: [
+        // Authentication
+        {
+          path: 'auth',
+          element: <ProtectedLogin />,
+          children: [{
+
+            path: '',
+            element: <AuthLayout />,
+            children: [
+
+              {
+                path: 'login',
+                element: <LoginPage />
+              },
+              {
+                path: 'sign_up',
+                element: <SignUpPage />
+              },
+            ],
+          }
+          ]
+        },
+        {
+          path: 'profile',
+          // element: <ProfilePage />,
+          element: <ProtectedLogin />,
+          children: [
+            {
+              path: '',
+              element: <ProfilePage />,
+
+            }
+          ]
+        },
         {
           path: '',
           element: <HomePage />,
@@ -31,33 +72,32 @@ export const router = createBrowserRouter(
           element: <ContactUsPage />,
         },
         {
+          path: 'favorites',
+          element: <ProtectedLogin />,
+          children: [
+            {
+              path: '',
+              element: <FavoritesPage />,
+
+            }
+          ]
+        },
+        {
+          path: 'deals',
+          element: <DealsPage />,
+        },
+        {
           path: 'cart',
           element: <CartPage />,
         },
         {
           path: 'check_out',
           element: <CheckOutPage />,
-        },
-        {
-          path: 'login',
-          element: <ProtectedLogin />,
-          children: [
-            {
-              path: '',
-              element: <LoginPage />,
-            },
-          ],
-        },
-        {
-          path: 'sign_up',
-          element: <ProtectedLogin />,
-          children: [
-            {
-              path: '',
-              element: <SignUpPage />,
-            },
-          ],
-        },
+        }, {
+          path: 'productId',
+          // path: '/:productId',
+          element: <ProductDetails />,
+        }
       ],
     },
     /* Catch-all for 404 */
