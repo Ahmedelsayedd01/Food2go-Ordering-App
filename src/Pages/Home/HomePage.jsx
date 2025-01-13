@@ -14,7 +14,7 @@ const HomePage = () => {
                                    <PremiumSection />
                                    <BannerSection />
                                    <BestDealsSection />
-                                   <ReviewSection />
+                                   {/* <ReviewSection /> */}
                             </div>
                      </div>
               </>
