@@ -93,9 +93,9 @@ export const router = createBrowserRouter(
         {
           path: 'check_out',
           element: <CheckOutPage />,
-        }, {
-          path: 'productId',
-          // path: '/:productId',
+        },
+        {
+          path: '/product/:productId',
           element: <ProductDetails />,
         }
       ],
