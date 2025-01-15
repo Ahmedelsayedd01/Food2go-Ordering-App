@@ -6,7 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { useGet } from './Hooks/useGet';
 import { useDispatch } from 'react-redux';
-import { setProducts, setSignUpType } from './Store/CreateSlices';
+import { setCategories, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType } from './Store/CreateSlices';
 import { useEffect } from 'react';
 import { MaintenancePage } from './Pages/page';
 
@@ -53,8 +53,14 @@ const App = () => {
 
   useEffect(() => {
     if (dataProducts && dataProducts.products) {
-      dispatch(setProducts(dataProducts.products));
-      console.log('Fetched ProddataProducts:', dataProducts);
+
+      dispatch(setProducts(dataProducts?.products || null));
+      dispatch(setProductsFilter(dataProducts?.products || null));
+      dispatch(setCategories(dataProducts?.categories || null));
+      dispatch(setProductsDiscount(dataProducts?.discounts || null));
+      dispatch(setProductsDiscountFilter(dataProducts?.discounts || null));
+
+      // console.log('Fetched ProddataProducts:', dataProducts);
     }
   }, [dataProducts]);
 
