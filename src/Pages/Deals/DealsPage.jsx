@@ -12,8 +12,8 @@ const DealsPage = () => {
           size={'5xl'}
           text={'Deals'}
         />
-        <DealsNavSection />
-        <DealsOfferSection />
+        {/* <DealsNavSection /> */}
+        {/* <DealsOfferSection /> */}
         <ItemsDealsSection />
       </div>
     </>
