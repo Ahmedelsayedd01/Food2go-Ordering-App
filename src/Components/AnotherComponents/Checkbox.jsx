@@ -1,19 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Checkbox = ({ checked = false }) => {
-       return (
-              <StyledWrapper>
-                     <label className="checkbox-container">
-                            <input
-                                   className="custom-checkbox"
-                                   checked={checked}
-                                   type="checkbox"
-                            />
-                            <span className="checkmark" />
-                     </label>
-              </StyledWrapper>
-       );
+const Checkbox = ({ handleChecked, isChecked  }) => {
+  return (
+    <StyledWrapper>
+      <label className="checkbox-container">
+        <input
+          className="custom-checkbox"
+          type="checkbox"
+          onChange={handleChecked}
+          checked={isChecked}
+        />
+        <span className="checkmark" />
+      </label>
+    </StyledWrapper>
+  );
 }
 
 const StyledWrapper = styled.div`
