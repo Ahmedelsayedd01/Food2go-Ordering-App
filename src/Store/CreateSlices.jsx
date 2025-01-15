@@ -8,8 +8,12 @@ const initialSignUpTypeState = { data: null };
 const initialOtpCodeState = { code: null };
 const initialNewPass = false;
 
-const initialProducts = { data: null }
-const initialProductsDiscount = { data: null }
+const initialCategories = { data: [] }
+const initialProducts = { data: [] }
+const initialProductsCard = { data: [] }
+const initialProductsFilter = { data: [] }
+const initialProductsDiscount = { data: [] }
+const initialProductsDiscountFilter = { data: [] }
 
 // Auth slices
 const userSlice = createSlice({
@@ -72,6 +76,20 @@ const newPassSlice = createSlice({
 });
 
 /* Products Slice */
+const categoriesSlice = createSlice({
+       name: "categories",
+       initialState: initialCategories,
+       reducers: {
+              setCategories: (state, action) => {
+                     console.log("Setting Categories:", action.payload);
+                     state.data = action.payload;
+              },
+              removeCategories: (state) => {
+                     console.log("Removing Categories");
+                     state.data = [];
+              },
+       },
+});
 const productsSlice = createSlice({
        name: "products",
        initialState: initialProducts,
@@ -82,7 +100,35 @@ const productsSlice = createSlice({
               },
               removeProducts: (state) => {
                      console.log("Removing Products");
-                     state.data = null;
+                     state.data = [];
+              },
+       },
+});
+const productsCardSlice = createSlice({
+       name: "productsCard",
+       initialState: initialProductsCard,
+       reducers: {
+              setProductsCard: (state, action) => {
+                     console.log("Setting Products Card:", action.payload);
+                     state.data = action.payload;
+              },
+              removeProductsCard: (state) => {
+                     console.log("Removing Products Card");
+                     state.data = [];
+              },
+       },
+});
+const productsFilterSlice = createSlice({
+       name: "productsFilter",
+       initialState: initialProductsFilter,
+       reducers: {
+              setProductsFilter: (state, action) => {
+                     console.log("Setting Products Filter:", action.payload);
+                     state.data = action.payload;
+              },
+              removeProductsFilter: (state) => {
+                     console.log("Removing Products Filter");
+                     state.data = [];
               },
        },
 });
@@ -97,7 +143,21 @@ const productsDiscountSlice = createSlice({
               },
               removeProductsDiscount: (state) => {
                      console.log("Removing Products Discount");
-                     state.data = null;
+                     state.data = [];
+              },
+       },
+});
+const productsDiscountFilterSlice = createSlice({
+       name: "productsDiscountFilter",
+       initialState: initialProductsDiscountFilter,
+       reducers: {
+              setProductsDiscountFilter: (state, action) => {
+                     console.log("Setting Products Discount Filter:", action.payload);
+                     state.data = action.payload;
+              },
+              removeProductsDiscountFilter: (state) => {
+                     console.log("Removing Products Discount Filter");
+                     state.data = [];
               },
        },
 });
@@ -108,12 +168,21 @@ export const { setSignUpType, removeSignUpType } = signUpTypeSlice.actions;
 export const { setOtpCode, removeOtpCode } = otpCodeSlice.actions;
 export const { setNewPass, removeNewPass } = newPassSlice.actions;
 
+export const { setCategories, removeCategories } = categoriesSlice.actions;
 export const { setProducts, removeProducts } = productsSlice.actions;
+export const { setProductsCard, removeProductsCard } = productsCardSlice.actions;
+export const { setProductsFilter, removeProductsFilter } = productsFilterSlice.actions;
 export const { setProductsDiscount, removeProductsDiscount } = productsDiscountSlice.actions;
+export const { setProductsDiscountFilter, removeProductsDiscountFilter } = productsDiscountFilterSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const signUpTypeReducer = signUpTypeSlice.reducer;
 export const otpCodeReducer = otpCodeSlice.reducer;
 export const newPassReducer = newPassSlice.reducer;
+
+export const categoriesReducer = categoriesSlice.reducer;
 export const productsReducer = productsSlice.reducer;
+export const productsCardReducer = productsCardSlice.reducer;
+export const productsFilterReducer = productsFilterSlice.reducer;
 export const productsDiscountReducer = productsDiscountSlice.reducer;
+export const productsDiscountFilterReducer = productsDiscountFilterSlice.reducer;
