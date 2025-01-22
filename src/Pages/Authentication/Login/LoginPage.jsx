@@ -113,7 +113,7 @@ const LoginPage = () => {
 
        useEffect(() => {
               if (responseLogin) {
-                     auth.login(responseLogin.data.user);
+                     auth.login(responseLogin.data);
                      dispatch(setOtpCode(null));
                      navigate('/', { replace: true });
               }
@@ -121,7 +121,7 @@ const LoginPage = () => {
 
        useEffect(() => {
               if (responseNewLogin) {
-                     auth.login(responseNewLogin.data.user);
+                     auth.login(responseNewLogin.data);
                      dispatch(setOtpCode(null));
                      dispatch(setNewPass(false));
                      navigate('/', { replace: true });
