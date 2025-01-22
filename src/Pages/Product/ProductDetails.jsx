@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import { LuTimer } from 'react-icons/lu';
 import { TbTruckDelivery } from 'react-icons/tb';
-import { useParams } from 'react-router-dom'
+import { replace, useNavigate, useParams } from 'react-router-dom'
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 import { Checkbox, SubmitButton } from '../../Components/Components';
 import { IoAddCircleSharp } from 'react-icons/io5';
@@ -10,14 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProductsCard } from '../../Store/CreateSlices';
 
 const ProductDetails = () => {
-       /* Product Id = 64 */
        const { productId } = useParams();
+       const uniqueId = useId();
        const dispatch = useDispatch();
+       const navigate = useNavigate();
        const products = useSelector(state => state.productsFilter.data)
        const product = products.find((product) => product.id === Number(productId))
-
-       const [productCard, setProductCard] = useState({})
-
        // State to track checked Exclude
        const [checkedExclude, setCheckedExclude] = useState([]);
        // State to track checked Extra
@@ -26,7 +24,39 @@ const ProductDetails = () => {
        const [checkedAddons, setCheckedAddons] = useState([]);
 
        // State to track Varition Option
+       const [variationList, setVariationList] = useState([]);
        const [options, setOptions] = useState([]);
+       const [selectedExtras, setSelectedExtras] = useState([]);
+       const [productPrice, setProductPrice] = useState(0);
+
+       const [productCard, setProductCard] = useState({})
+
+       const [finalPrice, setFinalPrice] = useState(0);
+       const [countProduct, setCountProduct] = useState(1);
+
+       const totalPrice = (countProduct * finalPrice).toFixed(2);  // Calculate total price based on countProduc
+       const totalPriceProduct = (countProduct * productPrice).toFixed(2);  // Calculate total price based on countProduc
+
+       // Functions to handle the count change
+       const increment = () => {
+              setCountProduct((prev) => {
+                     const newCount = prev + 1;
+                     return newCount; // Return the updated count
+              });
+       };
+
+       const decrement = () => {
+              if (countProduct > 0) {
+                     setCountProduct((prev) => prev - 1);
+              }
+       };
+
+
+
+
+       useEffect(() => { setProductPrice(product?.price?.toFixed(2)) }, [product])
+       useEffect(() => { console.log('variationList', variationList) }, [variationList])
+
 
        const handleCheckedExclude = (excludeId) => {
               setCheckedExclude((prev) => {
@@ -54,23 +84,33 @@ const ProductDetails = () => {
               });
        };
 
+       // Update the handleCheckedAddons to manage count properly
        const handleCheckedAddons = (addonId, addonPrice) => {
               setCheckedAddons((prev) => {
                      const existingAddon = prev.find((addon) => addon.id === addonId);
+                     console.log('addonPrice', addonPrice)
+
                      if (existingAddon) {
-                            // Remove addon if it is already selected
-                            return prev.filter((addon) => addon.id !== addonId);
+                            // If addon exists, increment its count
+                            return prev.map((addon) =>
+                                   addon.id === addonId
+                                          ? { ...addon, count: addon.count + 1 }  // Increase count
+                                          : addon
+                            );
                      } else {
-                            // Add addon with an initial count of 1 and price
+                            // If addon doesn't exist, add it with an initial count of 1
                             return [...prev, { id: addonId, count: 1, price: addonPrice }];
                      }
+
               });
        };
 
        const incrementCount = (addonId) => {
               setCheckedAddons((prev) =>
                      prev.map((addon) =>
-                            addon.id === addonId ? { ...addon, count: addon.count + 1 } : addon
+                            addon.id === addonId
+                                   ? { ...addon, count: addon.count + 1 }  // Increase count
+                                   : addon
                      )
               );
        };
@@ -79,78 +119,163 @@ const ProductDetails = () => {
               setCheckedAddons((prev) =>
                      prev.reduce((result, addon) => {
                             if (addon.id === addonId) {
-                                   // If count is greater than 1, decrement the count
                                    if (addon.count > 1) {
+                                          // If count > 1, decrement it
                                           result.push({ ...addon, count: addon.count - 1 });
                                    }
-                                   // If count is 1, do not include the addon (remove it)
+                                   // If count is 1, remove the addon from the list
+                                   else {
+                                          // Do not include the addon
+                                   }
                             } else {
-                                   // Keep all other addons unchanged
-                                   result.push(addon);
+                                   result.push(addon);  // Keep all other addons unchanged
                             }
                             return result;
                      }, [])
               );
        };
 
-       const handleSetOption = (selectedOption) => {
+
+       // Helper function to calculate the total price of checked items (addons, extras, etc.)
+       const calculateTotalPriceAddons = (items, key = 'price') =>
+              items.reduce((total, item) => total + (item?.[key] || 0) * item.count, 0);  // Multiply by count for addons
+
+       const calculateTotalPrice = (items, key = 'price') =>
+              items.reduce((total, item) => total + (item?.[key] || 0), 0);
+
+       // Handle selecting or deselecting an option
+       const handleSetOption = (selectedOption, variation) => {
               setOptions((prev) => {
-                     const exists = prev.find((option) => option.id === selectedOption.id);
-                     if (exists) {
-                            // Remove the option if it already exists
-                            return prev.filter((option) => option.id !== selectedOption.id);
-                     } else {
-                            // Add the option if it doesn't exist
-                            return [...prev, selectedOption];
+                     const exists = prev.some((option) => option.id === selectedOption.id);
+                     let newOptions;
+
+                     if (variation.type === 'single') {
+                            // Single-selection: Replace the current option
+                            newOptions = exists ? [] : [selectedOption];
+                            setVariationList([{ variation_id: variation.id, option_id: selectedOption.id }]);
+                     } else if (variation.type === 'multiple') {
+                            // Multi-selection: Add or remove options
+                            newOptions = exists
+                                   ? prev.filter((option) => option.id !== selectedOption.id)
+                                   : [...prev, selectedOption];
+
+                            setVariationList((prevList) =>
+                                   exists
+                                          ? prevList.filter(
+                                                 (item) =>
+                                                        item.variation_id !== variation.id || item.option_id !== selectedOption.id
+                                          )
+                                          : [...prevList, { variation_id: variation.id, option_id: selectedOption.id }]
+                            );
                      }
+
+                     return newOptions; // Update options state
+              });
+
+              if (variation.type === 'single') {
+                     setSelectedExtras([]); // Clear extras for single variations
+              }
+       };
+
+       // Handle selecting or deselecting an extra
+       const handleSetExtra = (extra) => {
+              setSelectedExtras((prev) => {
+                     const exists = prev.some((item) => item.id === extra.id);
+
+                     const updatedExtras = exists
+                            ? prev.filter((item) => item.id !== extra.id) // Remove the extra
+                            : [...prev, extra]; // Add the extra
+
+                     return updatedExtras; // Update extras state
               });
        };
 
-       // Calculate the total addon price
-       const totalAddonPrice = checkedAddons.reduce(
-              (total, addon) => total + addon.price * addon.count,
-              0
-       );
-       // Calculate the total extra price
-       const totalExtraPrice = checkedExtra.reduce((total, extra) => total + extra.price, 0);
+       // Centralized calculation of the final price
+       useEffect(() => {
+              const calculateRawTotalPrice = () => {
+                     const basePrice = product?.price || 0;
+                     const extraPrice = calculateTotalPrice(selectedExtras);
+                     const optionsPrice = calculateTotalPrice(options);
 
-       // Calculate the total option price
-       const totalOptionsPrice = options.reduce((total, option) => total + option.price, 0);
+                     return basePrice + extraPrice + optionsPrice;
+              };
+
+              // Calculate addonPrice and extraProductPrice separately
+              const addonPrice = calculateTotalPriceAddons(checkedAddons); // Include count in price calculation
+              const extraProductPrice = calculateTotalPrice(checkedExtra);
+
+              const rawTotalPrice = calculateRawTotalPrice();
+
+              // Discounted price calculation: apply discount only on rawTotalPrice (base + extras + options)
+              const discountedPrice =
+                     product?.discount?.type === 'precentage'
+                            ? rawTotalPrice - (rawTotalPrice * (product?.discount?.amount || 0)) / 100
+                            : rawTotalPrice - (product?.discount?.amount || 0);
 
 
-       // Calculate the final product price including discounts and addons
-       const discountedPrice = product?.discount?.type === 'precentage'
-              ? product?.price - (product?.price * (product?.discount?.amount || 0)) / 100
-              : product?.price;
+              console.log('rawTotalPrice:', rawTotalPrice);
+              console.log('discountedPrice:', discountedPrice);
 
-       const finalPrice = (discountedPrice + totalAddonPrice + totalExtraPrice + totalOptionsPrice).toFixed(2);
+              // Calculate finalPrice
+              const finalPrice =
+                     discountedPrice +
+                     addonPrice +
+                     extraProductPrice;
+
+              console.log('finalPrice:', finalPrice);
+
+              // Update prices in state
+              setProductPrice(rawTotalPrice.toFixed(2)); // Update raw price
+              setFinalPrice(finalPrice.toFixed(2)); // Update final price
+       }, [options, selectedExtras, checkedAddons, checkedExtra, product, countProduct]);
+
+
 
 
        useEffect(() => { console.log('checkedExclude', checkedExclude) }, [checkedExclude])
        useEffect(() => { console.log('checkedExtra', checkedExtra) }, [checkedExtra])
        useEffect(() => { console.log('checkedAddons', checkedAddons) }, [checkedAddons])
+       useEffect(() => { console.log('options', options) }, [options])
+       useEffect(() => { console.log('OptionExtras', selectedExtras) }, [selectedExtras])
+       useEffect(() => { console.log('Final Price:', finalPrice); }, [finalPrice])
 
        useEffect(() => { console.log('products', products) }, [products])
        useEffect(() => { console.log('product', product) }, [product])
 
-       useEffect(() => { console.log('options', options) }, [options])
+
+
+
+
 
        const handleAddProduct = (product) => {
 
+
               const newProduct = {
-                     id: product.id,
+                     productId: product.id,
+                     numberId: Number(Math.floor(Math.random() * 1000)),
                      name: product.name,
                      description: product.description,
                      image: product.image_link,
-                     extra: checkedExtra,
-                     excludes: checkedExclude,
                      addons: checkedAddons,
-                     total: finalPrice,
+                     extraProduct: checkedExtra,
+                     extraOptions: selectedExtras,
+                     excludes: checkedExclude,
+                     variations: variationList,
+                     options: options,
+                     note: '',
+                     tax: product?.tax,
+                     discount: product.discount,
+                     passProductPrice: product.price + calculateTotalPriceAddons(checkedAddons) + calculateTotalPrice(options) + calculateTotalPrice(selectedExtras),
+                     passPrice: product.price,
+                     total: totalPrice - calculateTotalPrice(checkedExtra),
+                     count: countProduct,
               };
 
+              dispatch(setProductsCard(newProduct));
+              navigate('/cart', { replace: true });
+       };
 
-              dispatch(setProductsCard(newProduct))
-       }
+
 
        useEffect(() => { console.log('productCard', productCard) }, [productCard])
 
@@ -163,20 +288,28 @@ const ProductDetails = () => {
                                    <div className="w-full flex flex-col items-start gap-y-5">
                                           <span className='w-full sm:text-3xl xl:text-5xl font-TextFontMedium text-mainColor'>{product?.name || ''}</span>
                                           <div className="w-full flex items-center justify-start gap-x-2 ">
-                                                 {product?.discount?.type === 'precentage' ? (
-                                                        <>
+                                                 <div>
+                                                        {/* {product?.discount?.type === 'precentage' ? (
+                                                               <div className='flex items-center gap-2'>
+                                                                      <>
+                                                                             <span className="sm:text-3xl lg:text-5xl text-mainColor font-TextFontMedium">
+                                                                                    {totalPrice}$
+                                                                             </span>
+                                                                             <span className="sm:text-3xl lg:text-5xl text-secoundColor font-TextFontMedium line-through decoration-secoundColor">
+                                                                                    {totalPriceProduct}$
+                                                                             </span>
+                                                                      </>
+                                                               </div>
+                                                        ) : (
                                                                <span className="sm:text-3xl lg:text-5xl text-mainColor font-TextFontMedium">
-                                                                      {finalPrice}$
+                                                                      {totalPrice}$
                                                                </span>
-                                                               <span className="sm:text-3xl lg:text-5xl text-secoundColor font-TextFontMedium line-through decoration-secoundColor">
-                                                                      {product?.price?.toFixed(2) || '0.00'}$
-                                                               </span>
-                                                        </>
-                                                 ) : (
+                                                        )} */}
                                                         <span className="sm:text-3xl lg:text-5xl text-mainColor font-TextFontMedium">
-                                                               {finalPrice}$
+                                                               {totalPrice}$
                                                         </span>
-                                                 )}
+                                                 </div>
+
                                           </div>
                                    </div>
                                    {/* Details && Description */}
@@ -218,7 +351,6 @@ const ProductDetails = () => {
                                                  </div>
                                           </div>
                                    )}
-
                                    {/* Excludes */}
                                    {product?.excludes?.length !== 0 && (
                                           <div className="w-full flex flex-col items-start justify-start ">
@@ -257,17 +389,22 @@ const ProductDetails = () => {
 
                                                                       {checkedAddons.find((item) => item.id === addon.id) && (
                                                                              <div className="flex items-center justify-center mt-2 gap-2">
-                                                                                    <IoAddCircleSharp
-                                                                                           className="text-mainColor text-3xl cursor-pointer"
-                                                                                           onClick={() => incrementCount(addon.id)}
-                                                                                    />
+                                                                                    {addon?.recommended !== 0 && (
+                                                                                           <IoIosRemoveCircle
+                                                                                                  className="text-mainColor text-3xl cursor-pointer"
+                                                                                                  onClick={() => decrementCount(addon.id)}
+                                                                                           />
+                                                                                    )}
                                                                                     <span className="text-mainColor text-2xl font-TextFontRegular">
                                                                                            {checkedAddons.find((item) => item.id === addon.id).count}
                                                                                     </span>
-                                                                                    <IoIosRemoveCircle
-                                                                                           className="text-mainColor text-3xl cursor-pointer"
-                                                                                           onClick={() => decrementCount(addon.id)}
-                                                                                    />
+                                                                                    {addon?.recommended !== 0 && (
+
+                                                                                           <IoAddCircleSharp
+                                                                                                  className="text-mainColor text-3xl cursor-pointer"
+                                                                                                  onClick={() => incrementCount(addon.id)}
+                                                                                           />
+                                                                                    )}
                                                                              </div>
                                                                       )}
                                                                </div>
@@ -278,30 +415,56 @@ const ProductDetails = () => {
                                    {/* Variations */}
                                    {product?.variations?.length !== 0 && (
                                           <div className="w-full flex flex-col items-start justify-start gap-3">
-
                                                  {product?.variations.map((variation, index) => (
-                                                        <div className="w-full flex items-center justify-start flex-wrap gap-2"
-                                                               key={index}
-                                                        >
-                                                               <span className='text-mainColor text-3xl font-TextFontRegular'>{variation?.name}:</span>
-                                                               <div className="w-full flex items-center flex-wrap justify-start gap-3">
+                                                        <div className="w-full flex items-center justify-start flex-wrap gap-2" key={index}>
+                                                               <span className="text-mainColor text-3xl font-TextFontRegular">{variation?.name}:</span>
+                                                               <div className="w-full flex sm:flex-col lg:flex-row items-start justify-start gap-3">
                                                                       {variation?.options.map((option) => (
-                                                                             <span
-                                                                                    key={option.id}
-                                                                                    className={`text-2xl font-TextFontRegular  border-2 border-mainColor rounded-xl py-2 px-3 cursor-pointer ${options.some((opt) => opt.id === option.id)
-                                                                                           ? 'bg-mainColor text-white'
-                                                                                           : 'bg-white text-mainColor '
-                                                                                           }`}
-                                                                                    onClick={() => handleSetOption(option)}
-                                                                             >
-                                                                                    {option.name}
-                                                                             </span>
-                                                                      ))}
+                                                                             <div className='flex flex-col items-start justify-start gap-y-4' key={option.id}>
+                                                                                    <div className="flex justify-start items-start">
+                                                                                           <span
+                                                                                                  className={`text-2xl font-TextFontRegular border-2 border-mainColor rounded-xl py-2 px-3 cursor-pointer transition-all duration-300 ease-in-out 
+                ${options.some((opt) => opt.id === option.id)
+                                                                                                                ? 'bg-mainColor text-white shadow-lg' // Selected state styling
+                                                                                                                : 'bg-white text-mainColor hover:bg-mainColor hover:text-white'
+                                                                                                         }`}
+                                                                                                  onClick={() => handleSetOption(option, variation)}
+                                                                                           >
+                                                                                                  {option.name}
+                                                                                           </span>
+                                                                                    </div>
 
+                                                                                    {/* Show extras when option is selected */}
+                                                                                    {option?.extra.length !== 0 && (
+                                                                                           variation.type === 'single' && options.some((opt) => opt.id === option.id) && (
+                                                                                                  <div className="flex flex-col items-start justify-start gap-y-2">
+
+                                                                                                         {option?.extra?.map((ex, index) => (
+                                                                                                                <div className="flex items-center gap-2" key={index}>
+                                                                                                                       <span className="text-mainColor text-2xl font-TextFontm">Extra:</span>
+                                                                                                                       <span
+                                                                                                                              className={`text-xl font-TextFontRegular border-2 border-mainColor rounded-xl py-2 px-3 cursor-pointer transition-all duration-300 ease-in-out 
+            ${selectedExtras.some((selected) => selected.id === ex.id)
+                                                                                                                                            ? 'bg-mainColor text-white shadow-lg' // Selected extra styling
+                                                                                                                                            : 'bg-white text-mainColor hover:bg-mainColor hover:text-white'
+                                                                                                                                     }`}
+                                                                                                                              onClick={() => handleSetExtra(ex)}
+                                                                                                                       >
+                                                                                                                              {ex.name}
+                                                                                                                       </span>
+                                                                                                                </div>
+                                                                                                         ))}
+
+
+                                                                                                  </div>
+                                                                                           )
+                                                                                    )}
+
+                                                                             </div>
+                                                                      ))}
                                                                </div>
                                                         </div>
                                                  ))}
-
 
                                           </div>
                                    )}
@@ -311,11 +474,23 @@ const ProductDetails = () => {
                                                  <SubmitButton text='Add To Card' handleClick={() => handleAddProduct(product)} />
                                           </div>
 
-                                          {/* <div className="w-3/12 flex items-start justify-start gap-4">
-                                                 <IoAddCircleSharp className='text-mainColor text-4xl cursor-pointer' />
-                                                 <span className='text-mainColor text-3xl font-TextFontRegular'>1</span>
-                                                 <IoIosRemoveCircle className='text-mainColor text-4xl cursor-pointer' />
-                                          </div> */}
+                                          <div className="w-3/12 flex items-center justify-center gap-4">
+                                                 {/* Decrement button */}
+                                                 <IoIosRemoveCircle
+                                                        className={`text-mainColor text-5xl cursor-pointer transition-all duration-200 ease-in-out ${countProduct === 1 ? 'opacity-50 cursor-not-allowed' : ''
+                                                               }`}
+                                                        onClick={countProduct > 1 ? decrement : undefined}
+                                                 />
+
+                                                 {/* Product count */}
+                                                 <span className="text-mainColor text-5xl font-TextFontRegular">{countProduct}</span>
+
+                                                 {/* Increment button */}
+                                                 <IoAddCircleSharp
+                                                        className="text-mainColor text-5xl cursor-pointer transition-all duration-200 ease-in-out"
+                                                        onClick={increment}
+                                                 />
+                                          </div>
 
                                    </div>
                             </div>
