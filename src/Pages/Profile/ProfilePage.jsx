@@ -8,7 +8,7 @@ const ProfilePage = () => {
        const auth = useAuth();
        const navigate = useNavigate();
 
-       const user = useSelector(state => state.user.data);
+       const user = useSelector(state => state.user.data.user);
 
        const handleLogout = () => {
               auth.logout();
@@ -45,13 +45,18 @@ const ProfilePage = () => {
                                                         <span className='text-2xl font-TextFontRegular text-secoundColor'>{user?.phone || ''}</span>
                                                  </div>
                                                  <div className="w-full flex sm:flex-row xl:flex-col items-start justify-start gap-1">
+                                                        <span className='text-2xl font-TextFontRegular text-gray-700'>Order's:</span>
+                                                        <span className='text-2xl font-TextFontRegular text-secoundColor'>{user?.orders_count || 0}</span>
+                                                 </div>
+                                                 {/*
+                                                 <div className="w-full flex sm:flex-row xl:flex-col items-start justify-start gap-1">
                                                         <span className='text-2xl font-TextFontRegular text-gray-700'>Address:</span>
                                                         <span className='text-2xl font-TextFontRegular text-secoundColor'>{user?.address || ''}</span>
-                                                 </div>
+                                                 </div> 
+                                                 */}
                                           </div>
                                           <div className="w-full flex items-end justify-end text-end mt-2">
                                                  <div className="">
-
                                                         <SubmitButton text={'Logout'} handleClick={handleLogout} />
                                                  </div>
                                           </div>
