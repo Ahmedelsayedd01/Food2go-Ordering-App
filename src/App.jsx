@@ -6,7 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { useGet } from './Hooks/useGet';
 import { useDispatch } from 'react-redux';
-import { setCategories, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType } from './Store/CreateSlices';
+import { setCategories, setCheckOutDetails, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType, setTaxType } from './Store/CreateSlices';
 import { useEffect } from 'react';
 import { MaintenancePage } from './Pages/page';
 
@@ -24,6 +24,10 @@ const App = () => {
     url: 'https://bcknd.food2go.online/customer/home/web_products',
   });
 
+  const { refetch: refetchCheckOutDetails, loading: loadingCheckOutDetails, data: dataCheckOutDetails } = useGet({
+    url: 'https://bcknd.food2go.online/customer/order_type',
+  });
+
   useEffect(() => {
     refetchSignUp();
   }, [refetchSignUp]);
@@ -35,6 +39,10 @@ const App = () => {
   useEffect(() => {
     refetchProducts();
   }, [refetchProducts]);
+
+  useEffect(() => {
+    refetchCheckOutDetails();
+  }, [refetchCheckOutDetails]);
 
 
   useEffect(() => {
@@ -54,6 +62,7 @@ const App = () => {
   useEffect(() => {
     if (dataProducts && dataProducts.products) {
 
+      dispatch(setTaxType(dataProducts?.tax || null));
       dispatch(setProducts(dataProducts?.products || null));
       dispatch(setProductsFilter(dataProducts?.products || null));
       dispatch(setCategories(dataProducts?.categories || null));
@@ -64,10 +73,19 @@ const App = () => {
     }
   }, [dataProducts]);
 
+  useEffect(() => {
+    if (dataCheckOutDetails && dataCheckOutDetails.payment_methods) {
+
+      dispatch(setCheckOutDetails(dataCheckOutDetails));
+
+      console.log('Fetched dataCheckOutDetails:', dataCheckOutDetails);
+    }
+  }, [dataCheckOutDetails]);
+
 
   return (
     <PrimeReactProvider>
-      {loadingSignUp || loadingProducts ? (
+      {loadingSignUp || loadingProducts || loadingCheckOutDetails ? (
         <div className="w-full h-screen flex justify-center items-center">
           <LoaderLogin />
         </div>
