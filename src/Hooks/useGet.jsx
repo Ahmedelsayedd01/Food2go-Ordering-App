@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export const useGet = ({ url }) => {
     // const auth = useAuth();
-    const user = useSelector(state => state.user);
+    const token = useSelector(state => state.user.data.token);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -15,7 +15,7 @@ export const useGet = ({ url }) => {
             const response = await axios.get(url, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${user?.token || ''}`,
+                    'Authorization': `Bearer ${token || ''}`,
                 },
             });
             if (response.status === 200) {
@@ -26,7 +26,7 @@ export const useGet = ({ url }) => {
         } finally {
             setLoading(false);
         }
-    }, [url, user?.token]);
+    }, [url, token]);
 
     useEffect(() => {
         fetchData();

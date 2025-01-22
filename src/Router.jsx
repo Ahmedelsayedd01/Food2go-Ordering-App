@@ -15,6 +15,7 @@ import {
   FavoritesPage,
   ProductDetails,
   DealsPage,
+  AddLocationPage,
 } from "./Pages/page";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import { AuthLayout } from "./Layouts/Layouts";
@@ -55,6 +56,17 @@ export const router = createBrowserRouter(
             {
               path: '',
               element: <ProfilePage />,
+
+            }
+          ]
+        },
+        {
+          path: 'add_location',
+          element: <ProtectedLogin />,
+          children: [
+            {
+              path: '',
+              element: <AddLocationPage />,
 
             }
           ]
