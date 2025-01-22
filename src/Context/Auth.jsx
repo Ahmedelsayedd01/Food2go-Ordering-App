@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { removeUser, setUser } from "../Store/CreateSlices";
+import { removeProductsCard, removeUser, setUser } from "../Store/CreateSlices";
 
 // Create a context
 const AuthContext = createContext();
@@ -13,24 +13,16 @@ export const ContextProvider = ({ children }) => {
 
   const [user, setUserState] = useState(() => userData || null);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     localStorage.setItem("user", JSON.stringify(user));
-  //   } else {
-  //     localStorage.removeItem("user");
-  //   }
-  // }, [user]);
-
   const login = (userData) => {
     setUserState(userData); // Update local state
     dispatch(setUser(userData)); // Dispatch to Redux
-    toast.success(`Welcome ${userData.f_name} ${userData.l_name}`);
+    toast.success(`Welcome ${userData?.user?.name || '-'}`);
   };
 
   const logout = () => {
     setUserState(null);
     dispatch(removeUser()); // Remove from Redux
-    localStorage.removeItem("user");
+    dispatch(removeProductsCard()); // Remove from Redux
     toast.success("Logged out successfully");
   };
 

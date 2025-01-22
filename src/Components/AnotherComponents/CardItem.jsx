@@ -31,9 +31,9 @@ const CardItem = ({ product, index }) => {
                      key={index}
               >
                      {/* Image */}
-                     <div className="relative rounded-xl min-h-56 max-h-56  w-full overflow-hidden">
+                     <div className="relative rounded-xl min-h-56 max-h-56  w-full overflow-hidden shadow-md">
                             <img
-                                   src={product?.image_link || ''}
+                                   src={product?.image_link || '/src/assets/Images/RedLogo.jsx'}
                                    className=" w-full h-full object-cover object-center"
                                    alt="item"
                                    loading='lazy'
@@ -42,10 +42,13 @@ const CardItem = ({ product, index }) => {
                             <button className="absolute top-4 right-5">
                                    <FaHeart className={`${product.favourite ? 'text-mainColor' : 'text-white'} hover:text-mainColor transition-all duration-200 text-2xl`} onClick={() => handleFavorite(product.id)} />
                             </button>
-                            {product.discount?.type === 'precentage' ? (
-                                   <span className='absolute top-5 -left-28 -rotate-45 text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product.discount?.amount || '0'}%</span>
-                            ) : (
-                                   ''
+                            {product.discount && (
+
+                                   product.discount?.type === 'precentage' ? (
+                                          <span className='absolute top-5 -left-28 -rotate-45 shadow-md text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product.discount?.amount || '0'}%</span>
+                                   ) : (
+                                          <span className='absolute top-5 -left-28 -rotate-45 shadow-md text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product.discount?.amount || '0'}$</span>
+                                   )
                             )}
                      </div>
 

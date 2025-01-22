@@ -64,6 +64,8 @@ const Navbar = () => {
                                                  className='text-mainColor text-4xl cursor-pointer z-10'
                                           />
                                    </div>
+
+                                   {/* Mobile Navbar  */}
                                    <div
                                           className={`w-full absolute ${toggleOpen ? 'top-16' : '-top-72'
                                                  } transition-all duration-300 left-0 bg-white shadow-md sm:flex xl:hidden flex-col items-center justify-center px-4 pb-3 rounded-br-3xl rounded-bl-3xl z-20`}
@@ -91,21 +93,51 @@ const Navbar = () => {
                                                         Contact Us
                                                  </Link>
                                           </div>
-                                          <div className='flex flex-col w-full items-center justify-center gap-y-2 mt-2'>
-                                                 <Link
-                                                        to={'/auth/login'}
-                                                        onClick={() => setToggleOpen(false)}
-                                                        className='w-full text-center text-xl text-mainColor border-2 border-mainColor font-TextFontRegular px-5 py-1 rounded-full'
-                                                 >
-                                                        Login
-                                                 </Link>
-                                                 <Link
-                                                        to={'/auth/sign_up'}
-                                                        onClick={() => setToggleOpen(false)}
-                                                        className='w-full text-center text-xl text-white bg-mainColor border-2 border-mainColor font-TextFontRegular px-5 py-1 rounded-full'
-                                                 >
-                                                        SignUp
-                                                 </Link>
+                                          <div className='flex flex-col w-full items-center justify-center gap-y-2'>
+                                                 {user ? (
+
+                                                        <div className='w-full flex flex-col items-center justify-center gap-x-3'>
+                                                               <Link
+                                                                      to={'/favorites'}
+                                                                      className='w-full flex items-center gap-3 text-xl font-TextFontMedium text-mainColor border-b-2 p-3 pb-1'
+                                                                      onClick={() => setToggleOpen(false)}
+                                                               >
+                                                                      <MdFavoriteBorder className='text-mainColor text-2xl' /> Favorites
+                                                               </Link>
+                                                               <Link
+                                                                      to={'/cart'}
+                                                                      className='w-full flex items-center gap-3 text-xl font-TextFontMedium text-mainColor border-b-2 p-3 pb-1'
+                                                                      onClick={() => setToggleOpen(false)}
+                                                               >
+                                                                      <CartIcon /> Cart
+                                                               </Link>
+                                                               <Link
+                                                                      to={'/profile'}
+                                                                      className='w-full flex items-center gap-3 text-xl font-TextFontMedium text-mainColor border-b-2 p-3 pb-1'
+                                                                      onClick={() => setToggleOpen(false)}
+                                                               >
+                                                                      <LuUserRound className='text-mainColor text-2xl' /> Profile
+                                                               </Link>
+                                                        </div>
+                                                 ) : (
+                                                        <>
+
+                                                               <Link
+                                                                      to={'/auth/login'}
+                                                                      onClick={() => setToggleOpen(false)}
+                                                                      className='w-full text-center text-xl text-mainColor border-2 border-mainColor font-TextFontRegular px-5 py-1 rounded-full'
+                                                               >
+                                                                      Login
+                                                               </Link>
+                                                               <Link
+                                                                      to={'/auth/sign_up'}
+                                                                      onClick={() => setToggleOpen(false)}
+                                                                      className='w-full text-center text-xl text-white bg-mainColor border-2 border-mainColor font-TextFontRegular px-5 py-1 rounded-full'
+                                                               >
+                                                                      SignUp
+                                                               </Link>
+                                                        </>
+                                                 )}
                                           </div>
                                    </div>
                             </nav>
