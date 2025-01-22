@@ -114,7 +114,7 @@ const SignUpPage = () => {
        useEffect(() => {
               if (responseSignUp) {
                      console.log('responseSignUp', responseSignUp)
-                     auth.login(responseSignUp.data.user)
+                     auth.login(responseSignUp.data)
                      dispatch(setOtpCode(''))
                      navigate("/", { replace: true });
               }

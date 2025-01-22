@@ -8,6 +8,8 @@ export { default as SignUpPage } from "./Authentication/SignUp/SignUpPage";
 
 /* Profile */
 export { default as ProfilePage } from "./Profile/ProfilePage";
+/* Location */
+export { default as AddLocationPage } from "./Locations/AddLocationPage";
 /* Home */
 export { default as HomePage } from "./Home/HomePage";
 /* Menu */
