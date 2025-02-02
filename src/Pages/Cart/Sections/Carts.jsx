@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Cart from './Cart';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeProductsCard } from '../../../Store/CreateSlices';
+import { removeProductsCard, setTotalPrice, UpdateOrder } from '../../../Store/CreateSlices';
 
 const Carts = () => {
 
-       const items = useSelector((state) => state.productsCard.data || []);
-       const taxType = useSelector((state) => state.taxType.data); // Check if tax is included or excluded
+       const items = useSelector((state) => state?.productsCard?.data || []);
+       const taxType = useSelector((state) => state?.taxType?.data || ''); // Check if tax is included or excluded
+       const order = useSelector(state => state?.order?.data || {});
        const dispatch = useDispatch();
 
        const [totalFoodPrice, setTotalFoodPrice] = useState(0);
@@ -79,13 +80,21 @@ const Carts = () => {
               return taxType === 'excluded' ? (baseTotal + tax) - discount : baseTotal;
        };
 
+       useEffect(() => {
+              dispatch(UpdateOrder({ ...order, amount: calculateTotal(), total_tax: tax, total_discount: discount }))
+       }, [items, tax, discount]);
+
+       useEffect(() => {
+              dispatch(setTotalPrice(calculateTotal()))
+       }, [calculateTotal])
+
        return (
               <div className="w-full flex flex-col items-center justify-center gap-y-7">
                      {items.length > 0 ? (
                             items.map((item, index) => (
                                    <Cart
                                           id={item.id}
-                                          index={index}
+                                          suppId={item.numberId}
                                           key={item.numberId} // Key applied here
                                           image={item.image || "/assets/Images/RedLogo.png"}
                                           name={item.name}

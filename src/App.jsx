@@ -1,17 +1,22 @@
 import { Footer, LoaderLogin, Navbar } from './Components/Components';
 import './index.css';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { useGet } from './Hooks/useGet';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCategories, setCheckOutDetails, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType, setTaxType } from './Store/CreateSlices';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { MaintenancePage } from './Pages/page';
 
 const App = () => {
+
+  const user = useSelector((state) => state?.user?.data || null);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const scrollContainerRef = useRef(null); // Ref for the scrollable container
 
   const { refetch: refetchSignUp, loading: loadingSignUp, data: dataSignUp } = useGet({
     url: 'https://bcknd.food2go.online/api/customer_login',
@@ -26,6 +31,7 @@ const App = () => {
 
   const { refetch: refetchCheckOutDetails, loading: loadingCheckOutDetails, data: dataCheckOutDetails } = useGet({
     url: 'https://bcknd.food2go.online/customer/order_type',
+    required: true,
   });
 
   useEffect(() => {
@@ -41,8 +47,15 @@ const App = () => {
   }, [refetchProducts]);
 
   useEffect(() => {
-    refetchCheckOutDetails();
-  }, [refetchCheckOutDetails]);
+    if (user) {
+      console.log('User authenticated, triggering refetch:', user);
+      refetchCheckOutDetails();
+    } else {
+      console.log('User is not authenticated, skipping refetch');
+    }
+  }, [user, refetchCheckOutDetails]);
+
+
 
 
   useEffect(() => {
@@ -82,6 +95,15 @@ const App = () => {
     }
   }, [dataCheckOutDetails]);
 
+  /* Scroll to Top when page changes */
+  useEffect(() => {
+    if (location.pathname && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, [location.pathname]);
 
   return (
     <PrimeReactProvider>
@@ -90,7 +112,9 @@ const App = () => {
           <LoaderLogin />
         </div>
       ) : (
-        <div className='relative w-full bg-white flex flex-col items-center justify-between h-screen overflow-y-scroll scrollPage'>
+        <div
+          ref={scrollContainerRef}
+          className='relative w-full bg-white flex flex-col items-center justify-between h-screen overflow-y-scroll scrollPage'>
           <div className="sticky top-0 w-full z-30">
             <Navbar />
           </div>

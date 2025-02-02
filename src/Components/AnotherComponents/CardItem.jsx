@@ -40,14 +40,14 @@ const CardItem = ({ product, index }) => {
                             />
                             {/* Favorite Icon */}
                             <button className="absolute top-4 right-5">
-                                   <FaHeart className={`${product.favourite ? 'text-mainColor' : 'text-white'} hover:text-mainColor transition-all duration-200 text-2xl`} onClick={() => handleFavorite(product.id)} />
+                                   <FaHeart className={`${product?.favourite ? 'text-mainColor' : 'text-white'} hover:text-mainColor transition-all duration-200 text-2xl`} onClick={() => handleFavorite(product?.id)} />
                             </button>
-                            {product.discount && (
+                            {product?.discount && (
 
-                                   product.discount?.type === 'precentage' ? (
-                                          <span className='absolute top-5 -left-28 -rotate-45 shadow-md text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product.discount?.amount || '0'}%</span>
+                                   product?.discount?.type === 'precentage' ? (
+                                          <span className='absolute top-5 -left-28 -rotate-45 shadow-md text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product?.discount?.amount || '0'}%</span>
                                    ) : (
-                                          <span className='absolute top-5 -left-28 -rotate-45 shadow-md text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product.discount?.amount || '0'}$</span>
+                                          <span className='absolute top-5 -left-28 -rotate-45 shadow-md text-center w-full bg-thirdBgColor text-mainColor text-xl font-TextFontMedium'>{product?.discount?.amount || '0'}$</span>
                                    )
                             )}
                      </div>
@@ -59,7 +59,7 @@ const CardItem = ({ product, index }) => {
 
                      {/* Item Description */}
                      <p className='w-full text-sm text-secoundColor font-TextFontRegular text-ellipsis overflow-hidden ...'>
-                            {product.description}
+                            {product?.description}
                      </p>
 
                      {/* Item Amount */}
@@ -67,7 +67,7 @@ const CardItem = ({ product, index }) => {
                             {product?.discount?.type === 'precentage' ? (
                                    <>
                                           <span className="text-xl text-mainColor font-TextFontMedium">
-                                                 {(product.price - (product.price * (product.discount?.amount || 0) / 100)).toFixed(2)}$
+                                                 {(product?.price - (product?.price * (product?.discount?.amount || 0) / 100)).toFixed(2)}$
                                           </span>
                                           <span className="text-xl text-secoundColor font-TextFontMedium line-through decoration-secoundColor">
                                                  {product?.price?.toFixed(2) || '0.00'}$
@@ -85,7 +85,7 @@ const CardItem = ({ product, index }) => {
                      {/* Buttons */}
                      <div className="flex items-center justify-between w-full gap-3">
                             <div className="w-full flex items-center justify-center">
-                                   <LinkButton width={true} to={`/product/${product.id}`} text="Order Now" />
+                                   <LinkButton width={true} to={`/product/${product?.id}`} text="Order Now" />
                             </div>
                             {/* <button
                                    type="button"

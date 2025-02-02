@@ -7,8 +7,7 @@ import { UpdateProductCard } from "../../../Store/CreateSlices";
 
 const Cart = ({
        // id,
-       index,
-       key,
+       suppId,
        image,
        name,
        description,
@@ -26,7 +25,7 @@ const Cart = ({
        const [openNote, setOpenNote] = useState(null);
        const [noteDes, setNoteDes] = useState('');
 
-       const items = useSelector((state) => state.productsCard.data || []);
+       const items = useSelector((state) => state?.productsCard?.data || []);
        const dispatch = useDispatch();
 
 
@@ -40,7 +39,7 @@ const Cart = ({
        };
        const handleAddNote = () => {
               const updatedItems = items.map((item) =>
-                     item.key === key ? { ...item, note: noteDes } : item
+                     item.suppId === suppId ? { ...item, note: noteDes } : item
               );
               // Dispatch an action to update the state with updatedItems
               dispatch(UpdateProductCard(updatedItems));
@@ -68,7 +67,8 @@ const Cart = ({
        // console.log('addonsPrice', addonsPrice)
        return (
               <div className="relative w-full sm:h-52 xl:h-60 flex flex-col sm:flex-row items-center gap-4 bg-mainBgColor p-4 rounded-xl shadow-md"
-                     key={key + index}>
+                     key={suppId}
+              >
                      {/* Cart Image */}
                      <div className="relative h-full w-3/12 overflow-hidden rounded-xl shadow-md">
                             <img
@@ -104,11 +104,11 @@ const Cart = ({
                      <div className="flex items-end justify-end sm:w-4/12 h-full">
                             <button
                                    className="w-full sm:w-auto sm:text-lg lg:text-xl text-white bg-mainColor px-6 py-2 rounded-2xl hover:bg-transparent hover:text-mainColor border-2 border-mainColor transition-all ease-in-out duration-300"
-                                   onClick={() => handleOpenNote(key)}
+                                   onClick={() => handleOpenNote(suppId)}
                             >
                                    Add Note
                             </button>
-                            {openNote === key && (
+                            {openNote === suppId && (
                                    <Dialog open={true} onClose={handleCloseNote} className="relative z-10" aria-labelledby="dialog-title">
                                           <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                                           <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -150,7 +150,7 @@ const Cart = ({
                      </div>
 
                      {/* Delete Icon */}
-                     <div className="absolute top-3 right-3 cursor-pointer" onClick={() => onDelete(key)}>
+                     <div className="absolute top-3 right-3 cursor-pointer" onClick={() => onDelete(suppId)}>
                             <DeleteIcon width={40} height={40} />
                      </div>
                      {taxType === 'excluded' && tax && (

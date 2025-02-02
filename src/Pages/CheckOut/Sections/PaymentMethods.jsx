@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UploadInput } from '../../../Components/Components';
+import { UpdateOrder } from '../../../Store/CreateSlices';
 
 const PaymentMethods = () => {
        const ReciptRef = useRef(null);
-       const CreditCards = useSelector(state => state.checkOutDetails.data.payment_methods);
+
+       const dispatch = useDispatch();
+       const order = useSelector(state => state?.order?.data || {});
+
+
+       const CreditCards = useSelector(state => state?.checkOutDetails?.data?.payment_methods || []);
 
        const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
        const [recipt, setRecipt] = useState('');
@@ -33,14 +39,13 @@ const PaymentMethods = () => {
               reader.readAsDataURL(file); // Read the file as a Base64 string
        };
 
-
-
-
        useEffect(() => { console.log('selectedPaymentMethod', selectedPaymentMethod) }, [selectedPaymentMethod])
        useEffect(() => { console.log('recipt', recipt) }, [recipt])
        useEffect(() => { console.log('reciptFile', reciptFile) }, [reciptFile])
 
-
+       useEffect(() => {
+              dispatch(UpdateOrder({ ...order, payment_method_id: selectedPaymentMethod, receipt: reciptFile }))
+       }, [selectedPaymentMethod, reciptFile])
        return (
               <>
                      <div className="w-full flex sm:flex-col xl:flex-row items-center justify-between border-mainColor border-[3px] rounded-2xl p-3">
@@ -78,19 +83,22 @@ const PaymentMethods = () => {
                                    </div>
 
                             </div>
-                            <div className="sm:w-full xl:w-6/12">
-                                   <div className="sm:w-full xl:w-3/4 flex sm:flex-col xl:flex-row sm:items-start xl:items-center justify-center gap-2">
-                                          <span className="w-8/12 text-2xl font-TextFontRegular text-mainColor">Recipt Upload:</span>
-                                          <UploadInput
-                                                 value={recipt}
-                                                 uploadFileRef={ReciptRef}
-                                                 placeholder="Recipt Image"
-                                                 handleFileChange={handleReciptChange}
-                                                 onChange={(e) => setRecipt(e.target.value)}
-                                                 onClick={() => handleReciptClick(ReciptRef)}
-                                          />
+                            {(selectedPaymentMethod === 12 || selectedPaymentMethod === 11) && (
+
+                                   <div className="sm:w-full xl:w-6/12">
+                                          <div className="sm:w-full xl:w-3/4 flex sm:flex-col xl:flex-row sm:items-start xl:items-center justify-center gap-0">
+                                                 <span className="w-7/12 text-2xl font-TextFontRegular text-mainColor xl:mt-2">Recipt Upload:</span>
+                                                 <UploadInput
+                                                        value={recipt}
+                                                        uploadFileRef={ReciptRef}
+                                                        placeholder="Recipt Image"
+                                                        handleFileChange={handleReciptChange}
+                                                        onChange={(e) => setRecipt(e.target.value)}
+                                                        onClick={() => handleReciptClick(ReciptRef)}
+                                                 />
+                                          </div>
                                    </div>
-                            </div>
+                            )}
                      </div>
               </>
        )

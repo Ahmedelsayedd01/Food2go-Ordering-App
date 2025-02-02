@@ -8,8 +8,11 @@ const ProfilePage = () => {
        const auth = useAuth();
        const navigate = useNavigate();
 
-       const user = useSelector(state => state.user.data.user);
+       const user = useSelector(state => state?.user?.data?.user || null);
 
+       const handleOrders = () => {
+              navigate('/orders', { replace: true })
+       }
        const handleLogout = () => {
               auth.logout();
               navigate('/', { replace: true })
@@ -26,7 +29,8 @@ const ProfilePage = () => {
                             <div className="w-full h-5/6 flex sm:flex-col xl:flex-row sm:gap-y-10 xl:justify-between gap-3">
                                    {/* Profile Image */}
                                    <div className="sm:w-full flex items-center justify-center xl:w-6/12">
-                                          <img src="/src/assets/Images/profilePhoto.jpeg" className='sm:w-52 sm:h-52 xl:w-96 xl:h-96 border-4 border-mainColor p-1 object-cover object-center sm:rounded-full xl:rounded-2xl' alt="photo" />
+                                          {/* <img src="/src/assets/Images/profilePhoto.jpeg" className='sm:w-52 sm:h-52 xl:w-96 xl:h-96 border-4 border-mainColor p-1 object-cover object-center sm:rounded-full xl:rounded-2xl' alt="photo" /> */}
+                                          <img src="/src/assets/Images/RedLogo.png" className='sm:w-52 sm:h-52 xl:w-96 xl:h-96 border-4 border-mainColor p-1 object-cover object-center sm:rounded-full xl:rounded-2xl' alt="photo" />
                                    </div>
                                    {/* Profile Details */}
                                    <div className="sm:w-full xl:w-6/12 flex flex-col items-center justify-center gap-5">
@@ -56,7 +60,8 @@ const ProfilePage = () => {
                                                  */}
                                           </div>
                                           <div className="w-full flex items-end justify-end text-end mt-2">
-                                                 <div className="">
+                                                 <div className="flex gap-3">
+                                                        <SubmitButton text={'Orders'} handleClick={handleOrders} />
                                                         <SubmitButton text={'Logout'} handleClick={handleLogout} />
                                                  </div>
                                           </div>

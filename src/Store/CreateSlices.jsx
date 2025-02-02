@@ -8,14 +8,39 @@ const initialNewPass = false;
 const initialCheckOutDetails = { data: null };
 
 const initialTaxType = { data: '', }
-const initialProducts = { dat0a: [], }
+const initialProducts = { data: [], }
 const initialCategories = { data: [], }
 const initialProductsCard = { data: [], }
 const initialProductsFilter = { data: [], }
 const initialProductsDiscount = { data: [], }
 const initialProductsDiscountFilter = { data: [], }
 
-// Auth slices
+const initialTotalPrice = { data: 0, }
+const initialOrders = {
+       data: {
+              currentOrders: [],
+              historyOrders: [],
+       },
+}
+
+const initialOrder = {
+       data: {
+              notes: "",
+              date: "",
+              payment_method_id: null,
+              receipt: "",
+              branch_id: null,
+              amount: null,
+              total_tax: null,
+              total_discount: null,
+              address_id: null,
+              order_type: null,
+              delivery_price: null,
+              products: [],
+       },
+}
+
+/*  User */
 const userSlice = createSlice({
        name: "user",
        initialState: initialUserState,
@@ -30,6 +55,7 @@ const userSlice = createSlice({
               },
        },
 });
+/*  SignUp Type */
 const signUpTypeSlice = createSlice({
        name: "signUpType",
        initialState: initialSignUpTypeState,
@@ -44,7 +70,7 @@ const signUpTypeSlice = createSlice({
               },
        },
 });
-
+/*  Otp */
 const otpCodeSlice = createSlice({
        name: "otpCode",
        initialState: initialOtpCodeState,
@@ -59,7 +85,7 @@ const otpCodeSlice = createSlice({
               },
        },
 });
-
+/*  New Pass */
 const newPassSlice = createSlice({
        name: "newPass",
        initialState: initialNewPass,
@@ -74,7 +100,7 @@ const newPassSlice = createSlice({
               },
        },
 });
-
+/*  CheckOut */
 const checkOutDetailsSlice = createSlice({
        name: "checkOutDetails",
        initialState: initialCheckOutDetails,
@@ -83,10 +109,14 @@ const checkOutDetailsSlice = createSlice({
                      console.log("Setting CheckOut Details:", action.payload);
                      state.data = action.payload;
               },
+              removeCheckOutDetails: (state) => {
+                     console.log("Removing CheckOut Details");
+                     state.data = null;
+              }
        },
 });
 
-/* Products Slice */
+/* Tax Type */
 const taxTypeSlice = createSlice({
        name: "taxType",
        initialState: initialTaxType,
@@ -101,6 +131,7 @@ const taxTypeSlice = createSlice({
               },
        },
 });
+/* Products */
 const productsSlice = createSlice({
        name: "products",
        initialState: initialProducts,
@@ -115,6 +146,7 @@ const productsSlice = createSlice({
               },
        },
 });
+/* Categories */
 const categoriesSlice = createSlice({
        name: "categories",
        initialState: initialCategories,
@@ -129,6 +161,7 @@ const categoriesSlice = createSlice({
               },
        },
 });
+/* Products Card */
 const productsCardSlice = createSlice({
        name: "productsCard",
        initialState: initialProductsCard, // Use the corrected initial state
@@ -151,9 +184,13 @@ const productsCardSlice = createSlice({
                      console.log("Removing Products Card:", action.payload);
                      state.data = state.data.filter(product => product.numberId !== action.payload); // Remove product by id
               },
+              removeAllProductsCard: (state) => {
+                     console.log("Removing All Products Card");
+                     state.data = [];
+              },
        },
 });
-
+/*  Products Filter */
 const productsFilterSlice = createSlice({
        name: "productsFilter",
        initialState: initialProductsFilter,
@@ -168,7 +205,7 @@ const productsFilterSlice = createSlice({
               },
        },
 });
-
+/*  Products Discount */
 const productsDiscountSlice = createSlice({
        name: "productsDiscount",
        initialState: initialProductsDiscount,
@@ -183,6 +220,7 @@ const productsDiscountSlice = createSlice({
               },
        },
 });
+/* Products Discount Filter */
 const productsDiscountFilterSlice = createSlice({
        name: "productsDiscountFilter",
        initialState: initialProductsDiscountFilter,
@@ -198,20 +236,82 @@ const productsDiscountFilterSlice = createSlice({
        },
 });
 
+/*  Total Price */
+const totalPriceSlice = createSlice({
+       name: "totalPrice",
+       initialState: initialTotalPrice,
+       reducers: {
+              setTotalPrice: (state, action) => {
+                     console.log("Setting Total Price:", action.payload);
+                     state.data = action.payload;
+              },
+              removeTotlePrice: (state) => {
+                     console.log("Removing Total Price");
+                     state.data = 0;
+              }
+       },
+});
+/* Order Slice */
+const orderSlice = createSlice({
+       name: "order",
+       initialState: initialOrder,
+       reducers: {
+              UpdateOrder: (state, action) => {
+
+                     console.log("Updating order:", action.payload);
+                     state.data = { ...state.data, ...action.payload }
+              },
+              removeOrder: (state) => {
+                     console.log("Removing Order");
+                     state.data = {
+                            notes: "",
+                            date: "",
+                            payment_method_id: null,
+                            receipt: "",
+                            branch_id: null,
+                            amount: null,
+                            total_tax: null,
+                            total_discount: null,
+                            address_id: null,
+                            order_type: null,
+                            delivery_price: null,
+                            products: [],
+                     }; // Reset to initial structure
+              },
+       },
+});
+/*  Orders */
+const ordersSlice = createSlice({
+       name: 'orders',
+       initialState: initialOrders,
+       reducers: {
+              setOrders: (state, action) => {
+                     console.log("Setting Orders:", action.payload);
+                     state.data = action.payload;
+              }
+       }
+})
+
+
+
 
 export const { setUser, removeUser } = userSlice.actions;
 export const { setSignUpType, removeSignUpType } = signUpTypeSlice.actions;
 export const { setOtpCode, removeOtpCode } = otpCodeSlice.actions;
 export const { setNewPass, removeNewPass } = newPassSlice.actions;
-export const { setCheckOutDetails } = checkOutDetailsSlice.actions;
+export const { setCheckOutDetails, removeCheckOutDetails } = checkOutDetailsSlice.actions;
 
 export const { setTaxType, removeTaxType } = taxTypeSlice.actions;
 export const { setProducts, removeProducts } = productsSlice.actions;
 export const { setCategories, removeCategories } = categoriesSlice.actions;
-export const { setProductsCard, UpdateProductCard, removeProductsCard } = productsCardSlice.actions;
+export const { setProductsCard, UpdateProductCard, removeProductsCard, removeAllProductsCard } = productsCardSlice.actions;
 export const { setProductsFilter, removeProductsFilter } = productsFilterSlice.actions;
 export const { setProductsDiscount, removeProductsDiscount } = productsDiscountSlice.actions;
 export const { setProductsDiscountFilter, removeProductsDiscountFilter } = productsDiscountFilterSlice.actions;
+
+export const { setTotalPrice, removeTotlePrice } = totalPriceSlice.actions;
+export const { UpdateOrder, removeOrder } = orderSlice.actions;
+export const { setOrders } = ordersSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const signUpTypeReducer = signUpTypeSlice.reducer;
@@ -226,3 +326,7 @@ export const productsCardReducer = productsCardSlice.reducer;
 export const productsFilterReducer = productsFilterSlice.reducer;
 export const productsDiscountReducer = productsDiscountSlice.reducer;
 export const productsDiscountFilterReducer = productsDiscountFilterSlice.reducer;
+
+export const totalPriceReducer = totalPriceSlice.reducer;
+export const orderReducer = orderSlice.reducer;
+export const ordersReducer = ordersSlice.reducer;

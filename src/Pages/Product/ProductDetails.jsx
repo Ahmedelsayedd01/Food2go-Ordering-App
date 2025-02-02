@@ -159,14 +159,41 @@ const ProductDetails = () => {
                                    ? prev.filter((option) => option.id !== selectedOption.id)
                                    : [...prev, selectedOption];
 
-                            setVariationList((prevList) =>
-                                   exists
-                                          ? prevList.filter(
-                                                 (item) =>
-                                                        item.variation_id !== variation.id || item.option_id !== selectedOption.id
-                                          )
-                                          : [...prevList, { variation_id: variation.id, option_id: selectedOption.id }]
-                            );
+                            setVariationList((prevList) => {
+                                   const existingVariation = prevList.find((item) => item.variation_id === variation.id);
+
+                                   if (exists) {
+                                          // If the selected option exists, remove it
+                                          return prevList.map((item) =>
+                                                 item.variation_id === variation.id
+                                                        ? {
+                                                               ...item,
+                                                               option_id: item.option_id.filter((id) => id !== selectedOption.id),
+                                                        }
+                                                        : item
+                                          );
+                                   } else if (existingVariation) {
+                                          // If the variation already exists, add the option to the option_id array
+                                          return prevList.map((item) =>
+                                                 item.variation_id === variation.id
+                                                        ? {
+                                                               ...item,
+                                                               option_id: [...new Set([...item.option_id, selectedOption.id])],
+                                                        }
+                                                        : item
+                                          );
+                                   } else {
+                                          // If the variation doesn't exist, add a new object
+                                          return [
+                                                 ...prevList,
+                                                 {
+                                                        variation_id: variation.id,
+                                                        option_id: [selectedOption.id],
+                                                 },
+                                          ];
+                                   }
+                            });
+
                      }
 
                      return newOptions; // Update options state

@@ -26,6 +26,11 @@ export { default as ProductDetails } from "./Product/ProductDetails";
 export { default as CartPage } from "./Cart/CartPage";
 /* CheckOut */
 export { default as CheckOutPage } from "./CheckOut/CheckOutPage";
+/* Orders */
+export { default as OrdersPage } from "./Orders/ordersPage";
+export { default as UpComingOrders } from "./Orders/Sections/UpComingOrders";
+export { default as HistoryOrders } from "./Orders/Sections/HistoryOrders";
+export { default as OrderTraking } from "./Orders/Sections/OrderTraking";
 
 /* Not Found Page */
 export { default as NotFoundPage } from "./SuppPages/NotFoundPage";

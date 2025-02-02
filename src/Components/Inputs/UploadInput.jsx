@@ -4,7 +4,7 @@ import { LuUpload } from 'react-icons/lu'
 const UploadInput = ({ uploadFileRef, handleFileChange, required = true, borderColor = "none", placeholder, placeholderSize = false, value, readonly = true, onChange, iconDirection = false, textDirection = false, onClick, paddinLeft = 'pl-2', paddinRight = 'pr-11', upload = false, source = 'upload' }) => {
        return (
               <>
-                     <div className="relative w-full h-12">
+                     <div className="relative w-full h-12 shadow-sm">
                             <input type='text'
                                    placeholder={placeholder}
                                    className={`w-full border-2 ${textDirection ? "text-right" : "text-left"} rounded-2xl border-${borderColor} 

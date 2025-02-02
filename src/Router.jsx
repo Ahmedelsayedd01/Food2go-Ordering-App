@@ -16,6 +16,10 @@ import {
   ProductDetails,
   DealsPage,
   AddLocationPage,
+  OrdersPage,
+  UpComingOrders,
+  HistoryOrders,
+  OrderTraking,
 } from "./Pages/page";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import { AuthLayout } from "./Layouts/Layouts";
@@ -99,17 +103,48 @@ export const router = createBrowserRouter(
           element: <DealsPage />,
         },
         {
+          path: '/product/:productId',
+          element: <ProductDetails />,
+        },
+        {
           path: 'cart',
           element: <CartPage />,
         },
         {
           path: 'check_out',
-          element: <CheckOutPage />,
+          element: <ProtectedLogin />,
+          children: [
+            {
+              path: '',
+              element: <CheckOutPage />,
+            }
+          ]
         },
         {
-          path: '/product/:productId',
-          element: <ProductDetails />,
-        }
+          path: 'orders',
+          element: <ProtectedLogin />,
+          children: [
+            {
+              path: '',
+              element: <OrdersPage />,
+              children: [
+                {
+                  path: '',
+                  element: <UpComingOrders />,
+                },
+                {
+                  path: 'history',
+                  element: <HistoryOrders />,
+                },
+                {
+                  path: 'order_traking/:orderId',
+                  element: <OrderTraking />,
+                }
+              ]
+
+            }
+          ]
+        },
       ],
     },
     /* Catch-all for 404 */
