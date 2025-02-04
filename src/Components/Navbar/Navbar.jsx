@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import RedLogo from '../../Assets/Images/RedLogo';
+import RedLogo from '../../assets/Images/RedLogo';
 import { Links } from '../Components';
 import { Link, useLocation } from 'react-router-dom';
 import { MdFavoriteBorder, MdRestaurantMenu } from 'react-icons/md';

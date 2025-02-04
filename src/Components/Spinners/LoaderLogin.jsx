@@ -1,6 +1,6 @@
 import React from 'react'
 import { PulseLoader } from 'react-spinners'
-import RedLogo from '../../Assets/Images/RedLogo'
+import RedLogo from '../../assets/Images/RedLogo'
 
 const LoaderLogin = () => {
        return (

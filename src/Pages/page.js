@@ -27,7 +27,7 @@ export { default as CartPage } from "./Cart/CartPage";
 /* CheckOut */
 export { default as CheckOutPage } from "./CheckOut/CheckOutPage";
 /* Orders */
-export { default as OrdersPage } from "./Orders/ordersPage";
+export { default as OrdersPage } from "./Orders/OrdersPage";
 export { default as UpComingOrders } from "./Orders/Sections/UpComingOrders";
 export { default as HistoryOrders } from "./Orders/Sections/HistoryOrders";
 export { default as OrderTraking } from "./Orders/Sections/OrderTraking";
