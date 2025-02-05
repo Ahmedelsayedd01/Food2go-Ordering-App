@@ -20,7 +20,7 @@ const PremiumSection = () => {
 
         </div>
         <LinkButton
-          to={'/menu'}
+          to={'/'}
           text={'Order from our premium dishes'}
         />
       </div>

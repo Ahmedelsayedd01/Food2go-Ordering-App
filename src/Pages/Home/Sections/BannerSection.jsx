@@ -49,13 +49,13 @@ const BannerSection = () => {
                                           alt="banner" />
                             </SplideSlide>
                      </Splide>
-                     <div className="w-full flex justify-start items-start pt-5">
-                            <Link to={'/menu'}
+                     {/* <div className="w-full flex justify-start items-start pt-5">
+                            <Link to={'/'}
                                    className='sm:text-xl xl:text-2xl text-center text-mainColor bg-white px-8 py-2 rounded-2xl hover:bg-transparent hover:text-white border-2 border-mainColor hover:border-white transition-all ease-in-out duration-300'
                             >
                                    Browse Deals
                             </Link>
-                     </div>
+                     </div> */}
               </div >
        );
 };

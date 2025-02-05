@@ -6,7 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { useGet } from './Hooks/useGet';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategories, setCheckOutDetails, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType, setTaxType } from './Store/CreateSlices';
+import { setCategories, setCheckOutDetails, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType, setTaxType ,setBanners} from './Store/CreateSlices';
 import { useEffect, useRef } from 'react';
 import { MaintenancePage } from './Pages/page';
 
@@ -34,6 +34,10 @@ const App = () => {
     required: true,
   });
 
+  const { refetch: refetchBannerData, loading: loadingBannerData, data: dataBanner } = useGet({
+    url: 'https://bcknd.food2go.online/customer/home/slider',
+  });
+
   useEffect(() => {
     refetchSignUp();
   }, [refetchSignUp]);
@@ -55,8 +59,9 @@ const App = () => {
     }
   }, [user, refetchCheckOutDetails]);
 
-
-
+  useEffect(() => {
+    refetchBannerData();
+  }, [refetchBannerData]);
 
   useEffect(() => {
     if (dataSignUp && dataSignUp.customer_login) {
@@ -74,7 +79,7 @@ const App = () => {
 
   useEffect(() => {
     if (dataProducts && dataProducts.products) {
-
+console.log(dataProducts)
       dispatch(setTaxType(dataProducts?.tax || null));
       dispatch(setProducts(dataProducts?.products || null));
       dispatch(setProductsFilter(dataProducts?.products || null));
@@ -105,9 +110,16 @@ const App = () => {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (dataBanner && dataBanner.banners) {
+      dispatch(setBanners(dataBanner?.banners));
+      console.log('Fetched Banners:', dataBanner);
+    }
+  }, [dataBanner]);
+
   return (
     <PrimeReactProvider>
-      {loadingSignUp || loadingProducts || loadingCheckOutDetails ? (
+      {loadingSignUp || loadingProducts || loadingCheckOutDetails || loadingBannerData ? (
         <div className="w-full h-screen flex justify-center items-center">
           <LoaderLogin />
         </div>

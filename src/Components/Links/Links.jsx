@@ -6,15 +6,20 @@ const Links = () => {
               <div
                      className='w-full flex items-center justify-evenly gap-x-10 bg-mainColor rounded-3xl py-2'
               >
-                     <NavLink to={''}
+                     {/* <NavLink to={''}
                             className='text-xl font-TextFontRegular text-white pb-1'
                      >
                             Home
-                     </NavLink>
-                     <NavLink to={'/menu'}
+                     </NavLink> */}
+                     <NavLink to={'/'}
                             className='text-xl font-TextFontRegular text-white pb-1'
                      >
                             Menu
+                     </NavLink>
+                     <NavLink to={''}
+                            className='text-xl font-TextFontRegular text-white pb-1'
+                     >
+                            Branch
                      </NavLink>
                      <NavLink to={'/contact_us'}
                             className='text-xl font-TextFontRegular text-white pb-1'

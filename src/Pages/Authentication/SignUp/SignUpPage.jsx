@@ -230,7 +230,6 @@ const SignUpPage = () => {
                                                         )}
                                                         {signState === 'otp' && (
                                                                <>
-                                                                      {code}
                                                                       <div className="w-full">
                                                                              <HeaderNavigate
                                                                                     title={'OTP Verification'}

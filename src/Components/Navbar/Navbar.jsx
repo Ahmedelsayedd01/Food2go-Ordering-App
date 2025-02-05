@@ -81,7 +81,7 @@ const Navbar = () => {
                                                         Home
                                                  </Link>
                                                  <Link
-                                                        to={'/menu'}
+                                                        to={'/'}
                                                         className='w-full text-xl font-TextFontMedium text-mainColor border-b-2 p-3 pb-1'
                                                         onClick={() => setToggleOpen(false)}
                                                  >

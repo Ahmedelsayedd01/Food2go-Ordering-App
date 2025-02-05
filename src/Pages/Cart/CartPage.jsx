@@ -44,7 +44,7 @@ const CartPage = () => {
                                    >
                                           Checkout
                                    </span>
-                                   <Link to={'/menu'} className='sm:w-full lg:w-auto sm:text-xl xl:text-2xl text-center text-mainColor bg-transparent px-16
+                                   <Link to={'/'} className='sm:w-full lg:w-auto sm:text-xl xl:text-2xl text-center text-mainColor bg-transparent px-16
                                                  py-2 rounded-2xl hover:bg-mainColor hover:text-white border-2
                                                  border-mainColor transition-all ease-in-out duration-300'
                                    >

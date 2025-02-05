@@ -15,6 +15,8 @@ const initialProductsFilter = { data: [], }
 const initialProductsDiscount = { data: [], }
 const initialProductsDiscountFilter = { data: [], }
 
+const initialBanners = { data: [], }
+
 const initialTotalPrice = { data: 0, }
 const initialOrders = {
        data: {
@@ -292,6 +294,18 @@ const ordersSlice = createSlice({
        }
 })
 
+/*  Banners */
+const bannerSlice = createSlice({
+       name: 'banner',
+       initialState: initialBanners,
+       reducers: {
+              setBanners: (state, action) => {
+                     console.log("Setting Banners:", action.payload);
+                     state.data = action.payload;
+              }
+       }
+})
+
 
 
 
@@ -312,6 +326,7 @@ export const { setProductsDiscountFilter, removeProductsDiscountFilter } = produ
 export const { setTotalPrice, removeTotlePrice } = totalPriceSlice.actions;
 export const { UpdateOrder, removeOrder } = orderSlice.actions;
 export const { setOrders } = ordersSlice.actions;
+export const { setBanners } = bannerSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const signUpTypeReducer = signUpTypeSlice.reducer;
@@ -330,3 +345,4 @@ export const productsDiscountFilterReducer = productsDiscountFilterSlice.reducer
 export const totalPriceReducer = totalPriceSlice.reducer;
 export const orderReducer = orderSlice.reducer;
 export const ordersReducer = ordersSlice.reducer;
+export const bannerReducer = bannerSlice.reducer;

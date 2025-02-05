@@ -39,7 +39,7 @@ const HistoryOrders = () => {
                                                  <div className="mt-8">
                                                         <LinkButton
                                                                text={'Explore Menu'}
-                                                               to={'/menu'}
+                                                               to={'/'}
                                                         />
                                                  </div>
                                           </div>

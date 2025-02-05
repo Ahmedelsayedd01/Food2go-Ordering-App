@@ -57,7 +57,7 @@ const Footer = () => {
               </li>
               <li>
                 <NavLink
-                  to="/menu"
+                  to="/"
                   className={({ isActive }) =>
                     `hover:text-white underline ${isActive ? 'text-white' : 'text-gray-300'}`
                   }
@@ -116,7 +116,7 @@ const Footer = () => {
               </li>
               <li>
                 <NavLink
-                  to="/menu"
+                  to="/"
                   className={({ isActive }) =>
                     `hover:text-white ${isActive ? 'text-white font-bold' : 'text-black font-bold'}`
                   }

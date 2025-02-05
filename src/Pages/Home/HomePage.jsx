@@ -4,6 +4,7 @@ import ReviewSection from './Sections/ReviewSection'
 import BestDealsSection from './Sections/BestDealsSection'
 import BannerSection from './Sections/BannerSection'
 import PremiumSection from './Sections/PremiumSection'
+import CategoriesScrollSection from '../Menu/Sections/CategoriesScrollSection'
 
 const HomePage = () => {
        return (

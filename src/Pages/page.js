@@ -35,3 +35,6 @@ export { default as OrderTraking } from "./Orders/Sections/OrderTraking";
 /* Not Found Page */
 export { default as NotFoundPage } from "./SuppPages/NotFoundPage";
 export { default as MaintenancePage } from "./SuppPages/MaintenancePage";
+
+/* Banners */
+export { default as Banners } from "./Menu/Sections/Banners";
