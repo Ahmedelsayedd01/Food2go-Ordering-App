@@ -23,7 +23,7 @@ const Banners = () => {
                          key={bannerData.length} // Forces re-initialization
                             options={{
                                    type: 'loop',
-                                   padding: '25%',
+                                   padding: '20%',
                                    autoplay: true,
                                    interval: 3000,
                                    perPage: 1,
@@ -31,7 +31,7 @@ const Banners = () => {
                                    arrows: false,
                                    pagination: true, // Enables pagination
                                    gap: '1rem',
-                                   perMove: 1, // Move 2 at a time             
+                                   // perMove: 1, // Move 2 at a time          
                             }}
                             // aria-label="Banners Images"
                      >

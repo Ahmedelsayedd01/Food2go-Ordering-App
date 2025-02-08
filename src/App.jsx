@@ -6,7 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { useGet } from './Hooks/useGet';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategories, setCheckOutDetails, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType, setTaxType ,setBanners} from './Store/CreateSlices';
+import { setCategories, setCheckOutDetails, setProducts, setProductsDiscount, setProductsDiscountFilter, setProductsFilter, setSignUpType, setTaxType ,setBanners,setBranch} from './Store/CreateSlices';
 import { useEffect, useRef } from 'react';
 import { MaintenancePage } from './Pages/page';
 
@@ -38,6 +38,10 @@ const App = () => {
     url: 'https://bcknd.food2go.online/customer/home/slider',
   });
 
+  const { refetch: refetchBranchData, loading: loadingBranchData, data: dataBranch } = useGet({
+    url: 'https://bcknd.food2go.online/customer/order_type',
+  });
+
   useEffect(() => {
     refetchSignUp();
   }, [refetchSignUp]);
@@ -49,6 +53,10 @@ const App = () => {
   useEffect(() => {
     refetchProducts();
   }, [refetchProducts]);
+
+  useEffect(() => {
+    refetchBranchData();
+  }, [refetchBranchData]);
 
   useEffect(() => {
     if (user) {
@@ -79,7 +87,7 @@ const App = () => {
 
   useEffect(() => {
     if (dataProducts && dataProducts.products) {
-console.log(dataProducts)
+        console.log(dataProducts)
       dispatch(setTaxType(dataProducts?.tax || null));
       dispatch(setProducts(dataProducts?.products || null));
       dispatch(setProductsFilter(dataProducts?.products || null));
@@ -117,16 +125,23 @@ console.log(dataProducts)
     }
   }, [dataBanner]);
 
+  useEffect(() => {
+    if (dataBranch && dataBranch.branches) {
+      dispatch(setBranch(dataBranch.branches));
+      console.log('Fetched Branches:', dataBranch.branches);
+    }
+  }, [dataBranch]);
+
   return (
     <PrimeReactProvider>
-      {loadingSignUp || loadingProducts || loadingCheckOutDetails || loadingBannerData ? (
+      {loadingSignUp || loadingProducts || loadingCheckOutDetails || loadingBannerData ||loadingBranchData ? (
         <div className="w-full h-screen flex justify-center items-center">
           <LoaderLogin />
         </div>
       ) : (
         <div
           ref={scrollContainerRef}
-          className='relative w-full bg-white flex flex-col items-center justify-between h-screen overflow-y-scroll scrollPage'>
+          className='relative w-full bg-white flex flex-col items-center justify-between h-screen overflow-y-scroll overflow-x-hidden'>
           <div className="sticky top-0 w-full z-30">
             <Navbar />
           </div>

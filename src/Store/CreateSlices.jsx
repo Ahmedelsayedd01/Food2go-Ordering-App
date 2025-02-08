@@ -16,6 +16,7 @@ const initialProductsDiscount = { data: [], }
 const initialProductsDiscountFilter = { data: [], }
 
 const initialBanners = { data: [], }
+const initialBranch = { data: [], }
 
 const initialTotalPrice = { data: 0, }
 const initialOrders = {
@@ -306,6 +307,18 @@ const bannerSlice = createSlice({
        }
 })
 
+/*  Branch */
+const branchSlice = createSlice({
+       name: 'branch',
+       initialState: initialBranch,
+       reducers: {
+              setBranch: (state, action) => {
+                     console.log("Setting Branch:", action.payload);
+                     state.data = action.payload;
+              }
+       }
+})
+
 
 
 
@@ -327,6 +340,7 @@ export const { setTotalPrice, removeTotlePrice } = totalPriceSlice.actions;
 export const { UpdateOrder, removeOrder } = orderSlice.actions;
 export const { setOrders } = ordersSlice.actions;
 export const { setBanners } = bannerSlice.actions;
+export const { setBranch } = branchSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const signUpTypeReducer = signUpTypeSlice.reducer;
@@ -346,3 +360,4 @@ export const totalPriceReducer = totalPriceSlice.reducer;
 export const orderReducer = orderSlice.reducer;
 export const ordersReducer = ordersSlice.reducer;
 export const bannerReducer = bannerSlice.reducer;
+export const branchReducer = branchSlice.reducer;

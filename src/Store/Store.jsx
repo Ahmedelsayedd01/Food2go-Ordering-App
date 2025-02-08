@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { bannerReducer,categoriesReducer, checkOutDetailsReducer, newPassReducer, orderReducer, ordersReducer, otpCodeReducer, productsCardReducer, productsDiscountFilterReducer, productsDiscountReducer, productsFilterReducer, productsReducer, signUpTypeReducer, taxTypeReducer, totalPriceReducer, userReducer } from "./CreateSlices";
+import { branchReducer,bannerReducer,categoriesReducer, checkOutDetailsReducer, newPassReducer, orderReducer, ordersReducer, otpCodeReducer, productsCardReducer, productsDiscountFilterReducer, productsDiscountReducer, productsFilterReducer, productsReducer, signUpTypeReducer, taxTypeReducer, totalPriceReducer, userReducer } from "./CreateSlices";
 import { combineReducers } from 'redux';
 import { thunk } from "redux-thunk";
 
@@ -23,6 +23,7 @@ const reducers = combineReducers({
        ordes: ordersReducer,
 
        banner:bannerReducer,
+       branch:branchReducer,
 
        productsFilter: productsFilterReducer,
        productsDiscount: productsDiscountReducer,

@@ -38,3 +38,7 @@ export { default as MaintenancePage } from "./SuppPages/MaintenancePage";
 
 /* Banners */
 export { default as Banners } from "./Menu/Sections/Banners";
+
+/* Branch */
+export { default as Branch } from "./Branch/Branch";
+

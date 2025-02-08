@@ -20,6 +20,7 @@ import {
   UpComingOrders,
   HistoryOrders,
   OrderTraking,
+  Branch,
 } from "./Pages/page";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import { AuthLayout } from "./Layouts/Layouts";
@@ -82,6 +83,10 @@ export const router = createBrowserRouter(
         {
           path: '',
           element: <MenuPage />,
+        },
+        {
+          path: 'branches',
+          element: <Branch />,
         },
         {
           path: 'contact_us',

@@ -16,7 +16,7 @@ const Links = () => {
                      >
                             Menu
                      </NavLink>
-                     <NavLink to={''}
+                     <NavLink to={'branches'}
                             className='text-xl font-TextFontRegular text-white pb-1'
                      >
                             Branch
