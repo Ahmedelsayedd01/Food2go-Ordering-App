@@ -22,9 +22,9 @@ const Banners = () => {
                      <Splide
                          key={bannerData.length} // Forces re-initialization
                             options={{
-                                   type: 'loop',
-                                   padding: '20%',
+                                   type   : 'loop',
                                    autoplay: true,
+                                   // padding:'3%',
                                    interval: 3000,
                                    perPage: 1,
                                    pauseOnHover: true,
@@ -36,10 +36,10 @@ const Banners = () => {
                             // aria-label="Banners Images"
                      >
                          {bannerData.map((banner,index) => (
-                            <SplideSlide key={index} className="w-full overflow-hidden rounded-3xl">
+                            <SplideSlide key={index} className="w-full overflow-hidden rounded-3xl ">
                                    <img 
                                    src={banner.image_link} 
-                                   className="w-full h-full object-fit max-h-96" 
+                                   className="w-full h-full object-fit max-h-80 md:max-h-96 rounded-3xl" 
                                    // alt={banner.alt} 
                                    />
                             </SplideSlide>
