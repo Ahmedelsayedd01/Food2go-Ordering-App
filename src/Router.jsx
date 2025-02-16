@@ -21,6 +21,7 @@ import {
   HistoryOrders,
   OrderTraking,
   Branch,
+  NewHomePage,
 } from "./Pages/page";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import { AuthLayout } from "./Layouts/Layouts";
@@ -82,6 +83,10 @@ export const router = createBrowserRouter(
         // },
         {
           path: '',
+          element: <NewHomePage />,
+        },
+        {
+          path: 'menu',
           element: <MenuPage />,
         },
         {

@@ -24,7 +24,7 @@ const Banners = () => {
                             options={{
                                    type   : 'loop',
                                    autoplay: true,
-                                   // padding:'3%',
+                                   padding:'5%',
                                    interval: 3000,
                                    perPage: 1,
                                    pauseOnHover: true,

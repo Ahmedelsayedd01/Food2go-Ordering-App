@@ -11,7 +11,7 @@ const Links = () => {
                      >
                             Home
                      </NavLink> */}
-                     <NavLink to={'/'}
+                     <NavLink to={'menu'}
                             className='text-xl font-TextFontRegular text-white pb-1'
                      >
                             Menu

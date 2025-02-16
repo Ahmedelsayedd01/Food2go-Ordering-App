@@ -11,3 +11,9 @@ export { default as CookingIcon } from "./OrderCookingIcon";
 export { default as OrderPreparingDeliveryIcon } from "./OrderPreparingDeliveryIcon";
 export { default as OrderOnWayIcon } from "./OrderOnWayIcon";
 export { default as OrderDeliveredIcon } from "./OrderDeliveredIcon";
+
+export { default as DashIcon } from "./DashIcon";
+export { default as MenuIcon } from "./MenuIcon";
+
+export { default as GooglePlayIcon } from "./GooglePlayIcon";
+export { default as AppleIcon } from "./AppleIcon";

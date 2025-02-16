@@ -12,6 +12,7 @@ export { default as ProfilePage } from "./Profile/ProfilePage";
 export { default as AddLocationPage } from "./Locations/AddLocationPage";
 /* Home */
 export { default as HomePage } from "./Home/HomePage";
+export { default as NewHomePage } from "./Home/NewHomePage";
 /* Menu */
 export { default as MenuPage } from "./Menu/MenuPage";
 /* Deals */
