@@ -24,20 +24,20 @@ const Footer = () => {
             <ul className="space-y-4 mt-4">
               <li className="flex items-center space-x-2">
                 <FaPhoneAlt className="text-3xl text-mainColor bg-white rounded-sm p-2"  />
-                <span>Phone: 123 456 7890</span>
+                <span>Phone: +201111771103</span>
               </li>
               <li className="flex items-center space-x-2">
                 <FaWhatsapp className="text-3xl text-mainColor bg-white rounded-sm p-2"  />
-                <span>WhatsApp: 123 456 7890</span>
+                <span>WhatsApp: +201111771103</span>
               </li>
               <li className="flex items-center space-x-2">
                 <FaEnvelope className="text-3xl text-mainColor bg-white rounded-sm p-2" />
-                <span>Email: support@edumy.com</span>
+                <span>Email: Info@food2go.online</span>
               </li>
-              <li className="flex items-center space-x-2">
+              {/* <li className="flex items-center space-x-2">
                 <FaMapMarkerAlt className="text-3xl text-mainColor bg-white rounded-sm p-2" />
                 <span>Address: 329 Queensberry St, Melbourne</span>
-              </li>
+              </li> */}
             </ul>
           </div>
 

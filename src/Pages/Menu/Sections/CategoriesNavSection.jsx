@@ -247,7 +247,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import { setProductsFilter } from '../../../Store/CreateSlices';
 import { Banners } from '../../page';
-
+import Image from '../../../assets/Images/IconNavFilter.png'
 const CategoriesNavSection = () => {
     const dispatch = useDispatch();
     const categories = useSelector(state => state.categories?.data);
@@ -297,7 +297,7 @@ const CategoriesNavSection = () => {
       // Define the "All" category object
   const allCategory = {
     name: 'All',
-    image_link: '/src/assets/Images/IconNavFilter.png',
+    image_link: Image,
   };
 
   // Combine the "All" category with the rest of your categories
