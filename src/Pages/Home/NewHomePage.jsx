@@ -9,13 +9,13 @@ import { Link } from "react-router-dom";
 const NewHomePage=()=>{
     return(
         <div>
-         <div className={`w-full h-full flex flex-col md:flex-row p-6 justify-center`}>
+         <div className={`w-full h-full flex flex-col md:flex-row p-2 md:p-6 justify-center`}>
 
             <div className={`w-full md:w-1/2 h-full flex flex-col items-center`}>
                 <RedLogo width={250} height={250} />
                 {/* <h1 className="text-2xl font-semibold text-mainColor">Food2go</h1> */}
                  <div className="flex items-center justify-center gap-2">
-                    <h1 className="text-gray-600">Powered by</h1>
+                    {/* <h1 className="text-gray-600">Powered by</h1> */}
                     <img src={mainLogo} className="w-24 h-24" alt="Main Logo" />
                 </div>
             </div>
@@ -42,9 +42,6 @@ const NewHomePage=()=>{
                         {/* <h1 className="text-2xl text-mainColor">Order Now</h1> */}
                     </Link>      
                 </div>
-            </div>
-
-            <div>
             </div>
         </div>
         </div>

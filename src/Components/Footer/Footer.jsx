@@ -6,11 +6,11 @@ import WhiteLogo from '../../assets/Images/WhiteLogo';
 
 const Footer = () => {
   return (
-    <div className="footer bg-mainColor w-full text-white p-7 mt-2">
-      <div className="container mx-auto px-5">
+    <div className="footer bg-mainColor w-full text-white p-4 mt-2">
+      <div className="w-full px-5">
         
         {/* Logo Section */}
-        <div className="flex items-center gap-x-2 mb-10">
+        <div className="flex items-center gap-x-2 mb-5">
           <WhiteLogo width={45} />
           <span className="text-3xl text-white font-TextFontRegular">Food2go</span>
         </div>
@@ -43,11 +43,11 @@ const Footer = () => {
 
           {/* Quick Links Section */}
           <div className="content">
-            <h2 className="text-gray-200 font-bold">Contact Us</h2>
-            <ul className="space-y-4 mt-4">
+            <h2 className="text-gray-200 font-bold">Pages</h2>
+            <ul className="gap-4 mt-4 flex flex-row md:flex-col">
               <li>
                 <NavLink
-                  to="/"
+                  to=""
                   className={({ isActive }) =>
                     `hover:text-white underline ${isActive ? 'text-white' : 'text-gray-300'}`
                   }
@@ -57,7 +57,7 @@ const Footer = () => {
               </li>
               <li>
                 <NavLink
-                  to="/"
+                  to="menu"
                   className={({ isActive }) =>
                     `hover:text-white underline ${isActive ? 'text-white' : 'text-gray-300'}`
                   }
@@ -67,7 +67,7 @@ const Footer = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact_us"
+                  to="contact_us"
                   className={({ isActive }) =>
                     `hover:text-white underline ${isActive ? 'text-white' : 'text-gray-300'}`
                   }
@@ -80,20 +80,20 @@ const Footer = () => {
 
           {/* Mobile Section */}
           <div className="content">
-            <h2 className="text-gray-200  font-bold">Mobile</h2>
-            <ul className="space-y-4 mt-4">
-              <li className="border w-[50%] border-white rounded-lg p-4 flex items-center gap-4">
+            <h2 className="text-gray-200 font-bold">Mobile</h2>
+            <ul className="gap-2 mt-4 flex flex-row md:flex-col">
+              <li className="border w-[50%] border-white rounded-lg p-2 flex items-center gap-4">
                 <FaApple className="text-3xl text-white p-1" />
                 <div>
                   <p className="text-sm">App Store</p>
-                  <p className="text-xs text-gray-400">Available now on the</p>
+                  {/* <p className="text-xs text-gray-400">Available now</p> */}
                 </div>
               </li>
-              <li className="border w-[50%] border-red-500 rounded-lg p-4 flex items-center gap-4">
+              <li className="border w-[50%] border-white rounded-lg p-2 flex items-center gap-4">
                 <FaGooglePlay className="text-3xl text-white p-1" />
                 <div>
                   <p className="text-sm">Google Play</p>
-                  <p className="text-xs text-gray-400">Get it on</p>
+                  {/* <p className="text-xs text-gray-400">Get it on</p> */}
                 </div>
               </li>
             </ul>
@@ -101,7 +101,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="footer-bottom mt-10 flex justify-between items-center text-sm border-t-2 pt-3 border-gray-400">
+        {/* <div className="footer-bottom mt-10 flex justify-between items-center text-sm border-t-2 pt-3 border-gray-400">
           <div className="footer-left">
             <ul className="flex space-x-6">
               <li>
@@ -139,7 +139,11 @@ const Footer = () => {
           <div className="footer-right text-lg">
             <p>©2024 . All rights reserved</p>
           </div>
-        </div>
+        </div> */}
+          <div className="text-center text-sm mt-5">
+            <p>©2024 . All rights reserved</p>
+          </div>
+
       </div>
     </div>
   );
