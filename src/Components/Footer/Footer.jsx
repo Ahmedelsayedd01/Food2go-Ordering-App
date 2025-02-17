@@ -3,10 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { FaPhoneAlt, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaApple, FaGooglePlay } from 'react-icons/fa';
 // import RedLogo from '../../Assets/Images/RedLogo';
 import WhiteLogo from '../../assets/Images/WhiteLogo';
+import { Link } from 'react-router-dom';
+import mainLogo from '../../assets/Images/mainLogo.jpeg'
 
 const Footer = () => {
   return (
-    <div className="footer bg-mainColor w-full text-white p-4 mt-2">
+    <div className="footer bg-mainColor w-full text-white p-4">
       <div className="w-full px-5">
         
         {/* Logo Section */}
@@ -16,7 +18,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Grid */}
-        <div className="footer-content grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="footer-content grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
           
           {/* Connect Us Section */}
           <div className="content">
@@ -140,8 +142,11 @@ const Footer = () => {
             <p>©2024 . All rights reserved</p>
           </div>
         </div> */}
-          <div className="text-center text-sm mt-5">
-            <p>©2024 . All rights reserved</p>
+          <div className="flex justify-center items-center gap-3 text-sm mt-4">
+            <Link to="https://food2go.online/" target="_blank" className="flex items-center justify-center gap-2">
+            <p>©2025 . All rights reserved</p>
+            <h1 className="text-white font-semibold text-xl">Food2go</h1>
+            </Link>
           </div>
 
       </div>
